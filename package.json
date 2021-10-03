@@ -1,0 +1,26 @@
+{
+  "name": "signalk-bandg-performance-plugin",
+  "version": "1.0.0",
+  "description": "Generate B&G performance PGNs to display on Vulcan/Zeus/Triton2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/htool/B_and_G_Performance-plugin.git"
+  },
+  "author": "hans@defect.org",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/htool/B_and_G_Performance-plugin/issues"
+  },
+  "homepage": "https://github.com/htool/B_and_G_Performance-plugin#readme",
+  "keywords": [
+    "signalk-node-server-plugin",
+    "signalk-category-nmea2000"
+  ],
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
