@@ -1,6 +1,6 @@
 const util = require('util')
 const _ = require('lodash')
-const default_src = '30' // should be SignalK's address
+var sourceAddress = '1'
 var globalOptions = []
 const performancePGN = '%s,3,130824,%s,255,%s,7d,99'
 
@@ -21,27 +21,9 @@ module.exports = function (app) {
   }
 
   function sendN2k(msgs) {
-    //app.debug("n2k_msg: " + msgs)
+    app.debug("n2k_msg: " + msgs)
     msgs.map(function(msg) { app.emit('nmea2000out', msg)})
   }
-
-  var localSubscription = {
-    context: '*', // Get data for all contexts
-    subscribe: [
-          {
-            path: 'performance.velocityMadeGood',
-            period: 'instant'
-          },
-          {
-            path: 'performance.polarSpeed',
-            period: 'instant'
-          },
-          {
-            path: 'performance.polarPerformance',
-            period: 'instant'
-          }
-        ]
-      };
 
   let supportedValues = {
 /*
@@ -198,12 +180,12 @@ Key = 8349; Wind Angle to mast = 45.8 deg
     var length = 2
 
     for (var type in supportedValues) {
-      app.debug('type: %s', type)
+      //app.debug('type: %s', type)
       if (typeof (globalOptions[type]) != 'undefined' && globalOptions[type]['enabled'] == true) {
-        //app.debug('globalOptions[%s] enabled', type);
+        // app.debug('globalOptions[%s] enabled', type);
         // Get value
         var value = app.getSelfPath(globalOptions[type]['source'])
-        //app.debug('path: %s  value: %j', globalOptions[type]['source'], value);
+        // app.debug('path: %s  value: %j', globalOptions[type]['source'], value);
         if (typeof (value) != 'undefined') {
           value = value.value
           // We have a path with a working value
@@ -214,19 +196,19 @@ Key = 8349; Wind Angle to mast = 45.8 deg
           switch (supportedValues[type]['unit']) {
             case 'rad':
               var hex = degToHex(value)
-              app.debug('degToHex: %s %s', value, hex)
+              //app.debug('degToHex: %s %s', value, hex)
               performancePGN_2 += ',' + hex
               break
 
             case 'percent':
               var hex = intToHex(value * 1000) // ratio to percentiles
-              /app.debug('% intToHex: %s %s', value, hex)
+              //app.debug('% intToHex: %s %s', value, hex)
               performancePGN_2 += ',' + hex
               break
               
             case 'm':
               var hex = intToHex(value / 100) // m to cm
-              /app.debug('m intToHex: %s %s', value, hex)
+              //app.debug('m intToHex: %s %s', value, hex)
               performancePGN_2 += ',' + hex
               break
 
@@ -242,16 +224,16 @@ Key = 8349; Wind Angle to mast = 45.8 deg
         
 
       } else {
-        app.debug('globalOptions[%s] disabled', type);
+        //app.debug('globalOptions[%s] disabled', type);
       }
-      app.debug('performancePGN_2: %s length: %s', performancePGN_2, length);
+      //app.debug('performancePGN_2: %s length: %s', performancePGN_2, length);
     }
 
     app.debug ('%j', globalOptions)
-    for (var key in globalOptions) {
+    if (length > 4) {
+      var msg = util.format(performancePGN + performancePGN_2, (new Date()).toISOString(), sourceAddress, padd((length & 0xff).toString(16), 2))
+      sendN2k([msg])
     }
-    var msg = util.format(performancePGN + performancePGN_2, (new Date()).toISOString(), default_src, padd((length & 0xff).toString(16), 2))
-    sendN2k([msg])
   }
 
 
@@ -275,7 +257,7 @@ Key = 8349; Wind Angle to mast = 45.8 deg
       }
       schema.properties[key] = obj;
     });
-    app.debug('schema: %j', schema);
+    // app.debug('schema: %j', schema);
   }
 
   updateSchema()
