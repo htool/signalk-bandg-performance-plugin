@@ -293,24 +293,6 @@ Key = 8349; Wind Angle to mast = 45.8 deg
 
     globalOptions = options;
 
-    app.subscriptionmanager.subscribe(
-      localSubscription,
-      unsubscribes,
-      subscriptionError => {
-        app.error('Error:' + subscriptionError);
-      },
-      delta => {
-        delta.updates.forEach(update => {
-          if (update.values) {
-            update.values.forEach(function (pathValue) {
-              var path = pathValue.path
-              var value = pathValue.value
-              // app.debug('path: %s value: %s', path, value)
-            });
-          }
-        });
-      }
-    );
     timers.push(setInterval(() => {
       sendPerformance(); 
     }, 500))
