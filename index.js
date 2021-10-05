@@ -15,9 +15,12 @@ module.exports = function (app) {
 
   var schema = {
     // The plugin schema
-    title: 'Select which data to send and what to use as source',
-    type: 'object',
-    properties: {}
+    properties: {
+      'null': {
+        'title': 'Select which data to send and what to use as source. For explanations of the data sources you can check the B&G H5000 Operation manual here:\nhttps://softwaredownloads.navico.com/BG/downloads/documents/H5000_OM_EN_988-10630-002_w.pdf',
+        'type': 'null',
+      }
+    }
   }
 
   function sendN2k(msgs) {
@@ -45,7 +48,7 @@ module.exports = function (app) {
 
 
     'nextLegTargetSpeed': {
-      'name'        : 'nextLegTargetSpeed',
+      'name'        : 'Next Legi Target Speed',
       'key'         : '36,21',
       'length'      : 4,
       'unit'        : 'm/s',
@@ -92,7 +95,7 @@ module.exports = function (app) {
     },
 
     'oppTackCOG': {
-      'name'        : 'Opposite tack COG',
+      'name'        : 'Opposite Tack COG',
       'key'         : '32,21',
       'length'      : 4,
       'unit'        : 'rad',
@@ -116,7 +119,7 @@ module.exports = function (app) {
     },
 
     'oppTackTarget': {
-      'name'        : 'Opposite tack target heading',
+      'name'        : 'Opposite Tack Target heading',
       'key'         : '33,21',
       'length'      : 4,
       'unit'        : 'rad',
@@ -149,7 +152,7 @@ module.exports = function (app) {
     },
 
     'drDistance': {
-      'name'        : 'Dead Reckoning distance',
+      'name'        : 'Dead Reckoning Distance',
       'key'         : '81,40',
       'length'      : 4,
       'unit'        : 'm',
@@ -165,7 +168,7 @@ module.exports = function (app) {
     },
 
     'headingOppTack': {
-      'name'        : 'Heading on opposite tack (True)',
+      'name'        : 'Heading on Opposite Tack (True)',
       'key'         : '9a,20',
       'length'      : 4,
       'unit'        : 'rad',
@@ -320,7 +323,7 @@ module.exports = function (app) {
       }
       schema.properties[key] = obj;
     });
-    // app.debug('schema: %j', schema);
+    app.debug('schema: %j', schema);
   }
 
   updateSchema()
