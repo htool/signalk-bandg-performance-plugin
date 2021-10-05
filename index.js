@@ -48,7 +48,7 @@ module.exports = function (app) {
 
 
     'nextLegTargetSpeed': {
-      'name'        : 'Next Legi Target Speed',
+      'name'        : 'Next Leg Target Speed',
       'key'         : '36,21',
       'length'      : 4,
       'unit'        : 'm/s',
@@ -79,6 +79,14 @@ module.exports = function (app) {
       'defaultPath' : 'performance.polarPerformance'
     },
 
+    'targetTWA': {
+      'name'        : 'Target TWA',
+      'key'         : '53,20',
+      'length'      : 4,
+      'unit'        : 'rad',
+      'defaultPath' : 'performance.targetAngle'
+    },
+
     'tideRate': {
       'name'        : 'Tide Rate',
       'key'         : '83,20',
@@ -86,6 +94,7 @@ module.exports = function (app) {
       'unit'        : 'm/s',
       'defaultPath' : ''
     },
+
     'tideSet': {
       'name'        : 'Tide Set',
       'key'         : '84,20',
@@ -204,7 +213,7 @@ module.exports = function (app) {
       'key'         : '35,20',
       'length'      : 4,
       'unit'        : 'rad',
-      'defaultPath' : 'performance.beatAngle'
+      'defaultPath' : ''
     },
 
     'mastRake': {

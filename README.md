@@ -15,14 +15,14 @@ Currently supported values:
  |Dead Reckoning distance         |                                   |
  |Ground Wind Direction						|                                   |
  |Ground Wind Speed						    |                                   |
- |Heading on opposite tack (True) | performance.tackTrue              |
+ |Heading on Opposite Tack (True) | performance.tackTrue              |
  |Heel Angle						          |                                   |
  |Leeway Angle                    | navigation.leewayAngle            |
  |Mast Rake						            |                                   |
  |Next Leg Bearing						    |                                   |
- |Next Legi Target Speed					|                                   |
- |Opposite tack COG               |                                   |
- |Opposite tack target heading    | performance.tackTrue              |
+ |Next Leg Target Speed					  |                                   |
+ |Opposite Tack COG               |                                   |
+ |Opposite Tack Target Heading    | performance.tackTrue              |
  |Optimal Wind Angle              | performance.beatAngle             |
  |Polar Boat Speed                | performance.polarSpeed            |
  |Polar Performance               | performance.polarPerformance      |
