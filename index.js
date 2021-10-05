@@ -26,40 +26,30 @@ module.exports = function (app) {
   }
 
   let supportedValues = {
-/*
-Key = 8318; Polar boat speed = 0.38 m/s
-Key = 8316; Polar performance = 100.0 %
-Key = 8498; Opposite tack COG = 66.3 deg
-Key = 8499; Opposite tack target heading = 328.8 deg
-Key = 8477; VMG performance = 0.0 %
-Key = 8528; Average True Wind Direction = 359.6 deg
-Key = 8529; Wind Phase = 11.6 deg
-Key = 8530; Wind lift = 11.6 deg
 
-Key = 8292; Unknown = 
-Key = 8297; Course = 336.2 deg
-Key = 8403; DR Bearing = 210.4 deg
-Key = 16513; DR Distance = 1881.80848 kmA
-Key = 8346; Heading on opposite Tack (True) = 30.8 deg
-Key = 8322; Leeway Angle = 0.0 deg
-Key = 8458; Optimum Wind Angle = 3.4 deg
-Key = 8460; Racetimer = 4 bytes
-Key = 16662; Latitude = 52.5784166
-Key = 16663; Longitude =  5.2693009
-Key = 8317; Polar boat speed = 3.21 m/s
-Key = 8275; Target TWA = 42.3 deg
-Key = 16501; Trip time = 4 bytes
-Key = 16649; Unknown 2 = 
-Key = 8477; VMG performance = 0.0 %
-Key = 8319; Velocity Made Good = 0.00 m/s
-Key = 8349; Wind Angle to mast = 45.8 deg
-*/
     'vmg': {
       'name'        : 'Velocity Made Good',
       'key'         : '7f,20',
       'length'      : 4,
       'unit'        : 'm/s',
       'defaultPath' : 'performance.velocityMadeGood'
+    },
+
+    'groundWind': {
+      'name'        : 'Ground Wind Speed',
+      'key'         : '38,21',
+      'length'      : 4,
+      'unit'        : 'm/s',
+      'defaultPath' : ''
+    },
+
+
+    'nextLegTargetSpeed': {
+      'name'        : 'nextLegTargetSpeed',
+      'key'         : '36,21',
+      'length'      : 4,
+      'unit'        : 'm/s',
+      'defaultPath' : ''
     },
 
     'vmgperf': {
@@ -86,9 +76,40 @@ Key = 8349; Wind Angle to mast = 45.8 deg
       'defaultPath' : 'performance.polarPerformance'
     },
 
+    'tideRate': {
+      'name'        : 'Tide Rate',
+      'key'         : '83,20',
+      'length'      : 4,
+      'unit'        : 'm/s',
+      'defaultPath' : ''
+    },
+    'tideSet': {
+      'name'        : 'Tide Set',
+      'key'         : '84,20',
+      'length'      : 4,
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
+
     'oppTackCOG': {
       'name'        : 'Opposite tack COG',
       'key'         : '32,21',
+      'length'      : 4,
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
+
+    'nextLegBearing': {
+      'name'        : 'Next Leg Bearing',
+      'key'         : '35,21',
+      'length'      : 4,
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
+
+    'groundWindDirection': {
+      'name'        : 'Ground Wind Direction',
+      'key'         : '37,21',
       'length'      : 4,
       'unit'        : 'rad',
       'defaultPath' : ''
@@ -110,21 +131,6 @@ Key = 8349; Wind Angle to mast = 45.8 deg
       'defaultPath' : ''
     },
 
-    'windPhase': {
-      'name'        : 'Wind Phase',
-      'key'         : '51,21',
-      'length'      : 4,
-      'unit'        : 'rad',
-      'defaultPath' : ''
-    },
-
-    'windLift': {
-      'name'        : 'Wind Lift',
-      'key'         : '52,21',
-      'length'      : 4,
-      'unit'        : 'rad',
-      'defaultPath' : ''
-    },
 
     'course': {
       'name'        : 'Course',
@@ -150,12 +156,28 @@ Key = 8349; Wind Angle to mast = 45.8 deg
       'defaultPath' : ''
     },
 
+    'biasAdvantage': {
+      'name'        : 'Bias Advantage',
+      'key'         : '31,21',
+      'length'      : 4,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
     'headingOppTack': {
       'name'        : 'Heading on opposite tack (True)',
       'key'         : '9a,20',
       'length'      : 4,
       'unit'        : 'rad',
       'defaultPath' : 'performance.tackTrue'
+    },
+
+    'tackingPerf': {
+      'name'        : 'Tacking Performance',
+      'key'         : '32,20',
+      'length'      : 4,
+      'unit'        : 'percent',
+      'defaultPath' : ''
     },
 
     'leewayAngle': {
@@ -166,13 +188,54 @@ Key = 8349; Wind Angle to mast = 45.8 deg
       'defaultPath' : 'navigation.leewayAngle'
     },
 
+    'heelAngle': {
+      'name'        : 'Heel Angle',
+      'key'         : '34,20',
+      'length'      : 4,
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
+
     'oppWindAngle': {
       'name'        : 'Optimal Wind Angle',
-      'key'         : '0a,21',
+      'key'         : '35,20',
       'length'      : 4,
       'unit'        : 'rad',
       'defaultPath' : 'performance.beatAngle'
-    }
+    },
+
+    'mastRake': {
+      'name'        : 'Mast Rake',
+      'key'         : '34,21',
+      'length'      : 4,
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
+
+    'windAngleMast': {
+      'name'        : 'Wind Angle to Mast',
+      'key'         : '9d,20',
+      'length'      : 4,
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
+
+    'windPhase': {
+      'name'        : 'Wind Phase',
+      'key'         : '51,21',
+      'length'      : 4,
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
+
+    'windLift': {
+      'name'        : 'Wind Lift',
+      'key'         : '52,21',
+      'length'      : 4,
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
+
   };
 
   function sendPerformance() {
@@ -238,7 +301,7 @@ Key = 8349; Wind Angle to mast = 45.8 deg
 
 
   function updateSchema() {
-    Object.keys(supportedValues).forEach(key => {
+    Object.keys(supportedValues).sort().forEach(key => {
       var obj =  {
         type: 'object',
         title: supportedValues[key]['name'],
