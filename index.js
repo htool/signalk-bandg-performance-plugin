@@ -270,8 +270,8 @@ module.exports = function (app) {
           // Add value
           switch (supportedValues[type]['unit']) {
             case 'rad':
-              var hex = degToHex(value)
-              //app.debug('degToHex: %s %s', value, hex)
+              var hex = radToHex(value)
+              app.debug('radToHex: %s %s', value, hex)
               performancePGN_2 += ',' + hex
               break
 
@@ -385,10 +385,15 @@ function radToDeg(radians) {
   return radians * 180 / Math.PI
 }
 
-function degToHex(degrees) {
-  var rad = Math.trunc((degToRad(degrees)*10000))
-  return intToHex(rad)
+function radToHex(rad) {
+  if (rad< 0) {
+    rad += (2 * Math.PI)
+  }
+  return intToHex(Math.trunc(rad*10000))
+}
 
+function degToHex(degrees) {
+  return radToHex(degToRad(degrees))
 }
 
 function degToRad(degrees) {
