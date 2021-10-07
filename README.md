@@ -23,10 +23,11 @@ Currently supported values:
  |Next Leg Target Speed					  |                                   |
  |Opposite Tack COG               |                                   |
  |Opposite Tack Target Heading    | performance.tackTrue              |
- |Optimal Wind Angle              | performance.beatAngle             |
+ |Optimal Wind Angle              |                                   |
  |Polar Boat Speed                | performance.polarSpeed            |
  |Polar Performance               | performance.polarPerformance      |
  |Tacking Performance						  |                                   |
+ |Target TWA                      | performance.beatAngle
  |Tide Rate						            |                                   |
  |Tide Set						            |                                   |
  |Velocity Made Good              | performance.velocityMadeGood      |
