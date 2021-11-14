@@ -1,6 +1,6 @@
 const util = require('util')
 const _ = require('lodash')
-var sourceAddress
+var sourceAddress = '1'
 var globalOptions = []
 const performancePGN = '%s,3,130824,%s,255,%s,7d,99'
 
@@ -19,12 +19,7 @@ module.exports = function (app) {
       'null': {
         'title': 'Select which data to send and what to use as source. For explanations of the data sources you can check the B&G H5000 Operation manual here:\nhttps://softwaredownloads.navico.com/BG/downloads/documents/H5000_OM_EN_988-10630-002_w.pdf',
         'type': 'null',
-      },
-      sourceAddress: {
-        type: "number",
-        title: "Source device id to use",
-        default: 1
-      },
+      }
     }
   }
 
@@ -354,8 +349,6 @@ module.exports = function (app) {
     var unsubscribes = [];
 
     globalOptions = options;
-    sourceAddress = globalOptions['sourceAddress']
-    app.debug('Using device id: %d', sourceAddress)
 
     timers.push(setInterval(() => {
       sendPerformance(); 
