@@ -248,6 +248,14 @@ module.exports = function (app) {
       'defaultPath' : ''
     },
 
+    'chainLength': {
+      'name'        : 'Chain Length',
+      'key'         : '1c,41',
+      'length'      : 4,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
   };
 
   function sendPerformance() {
@@ -282,7 +290,7 @@ module.exports = function (app) {
               break
               
             case 'm':
-              var hex = intToHex(value / 100) // m to cm
+              var hex = intTo4BHex(value * 100) // m to cm
               //app.debug('m intToHex: %s %s', value, hex)
               performancePGN_2 += ',' + hex
               break
@@ -304,8 +312,12 @@ module.exports = function (app) {
       //app.debug('performancePGN_2: %s length: %s', performancePGN_2, length);
     }
 
-    app.debug ('%j', globalOptions)
+    // app.debug ('%j', globalOptions)
     if (length > 4) {
+      if (length <= 8) {
+        performancePGN_2 += 'ff,ff';
+        length = 10; // force multipacket
+      }
       var msg = util.format(performancePGN + performancePGN_2, (new Date()).toISOString(), sourceAddress, padd((length & 0xff).toString(16), 2))
       sendN2k([msg])
     }
@@ -403,4 +415,9 @@ function degToRad(degrees) {
 function intToHex(integer) {
 	var hex = padd((integer & 0xff).toString(16), 2) + "," + padd(((integer >> 8) & 0xff).toString(16), 2)
   return hex
+}
+
+function intTo4BHex(integer) {
+	var hex = padd((integer & 0xff).toString(16), 2) + "," + padd(((integer >> 8) & 0xff).toString(16), 2) + "," + padd(((integer >> 16)& 0xff).toString(16), 2) + "," + padd(((integer >> 24) & 0xff).toString(16), 2)
+  return hex;
 }

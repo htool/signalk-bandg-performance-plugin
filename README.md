@@ -11,6 +11,7 @@ Currently supported values:
  |Average True Wind Direction     |                                   |
  |Bias Advantage                  |                                   |
  |Course                          | navigation.courseOverGroundTrue   |
+ |Chain Length                    |                                   |
  |Dead Reckoning bearing          |                                   |
  |Dead Reckoning distance         |                                   |
  |Ground Wind Direction						|                                   |
