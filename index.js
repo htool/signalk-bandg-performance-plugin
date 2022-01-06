@@ -17,7 +17,7 @@ module.exports = function (app) {
     // The plugin schema
     properties: {
       'null': {
-        'title': 'Select which data to send and what to use as source. For explanations of the data sources you can check the B&G H5000 Operation manual here:\nhttps://softwaredownloads.navico.com/BG/downloads/documents/H5000_OM_EN_988-10630-002_w.pdf',
+        'title': 'Select which data to send and what to use as path and source device. Source device can be specified when a path has multiple value sources. For explanations of the data you can check the B&G H5000 Operation manual here:\nhttps://softwaredownloads.navico.com/BG/downloads/documents/H5000_OM_EN_988-10630-002_w.pdf',
         'type': 'null',
       }
     }
@@ -33,7 +33,7 @@ module.exports = function (app) {
     'vmg': {
       'name'        : 'Velocity Made Good',
       'key'         : '7f,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'm/s',
       'defaultPath' : 'performance.velocityMadeGood'
     },
@@ -41,16 +41,16 @@ module.exports = function (app) {
     'groundWind': {
       'name'        : 'Ground Wind Speed',
       'key'         : '38,21',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'm/s',
-      'defaultPath' : ''
+      'defaultPath' : 'environment.wind.speedOverGround'
     },
 
 
     'nextLegTargetSpeed': {
       'name'        : 'Next Leg Target Speed',
       'key'         : '36,21',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'm/s',
       'defaultPath' : ''
     },
@@ -58,7 +58,7 @@ module.exports = function (app) {
     'vmgperf': {
       'name'        : 'VMG Performance',
       'key'         : '1d,21',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'percent',
       'defaultPath' : ''
     },
@@ -66,7 +66,7 @@ module.exports = function (app) {
     'polarSpeed': {
       'name'        : 'Polar Boat Speed',
       'key'         : '7e,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'm/s',
       'defaultPath' : 'performance.polarSpeed'
     },
@@ -74,7 +74,7 @@ module.exports = function (app) {
     'polarPerformance': {
       'name'        : 'Polar Performance',
       'key'         : '7c,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'percent',
       'defaultPath' : 'performance.polarPerformance'
     },
@@ -82,7 +82,7 @@ module.exports = function (app) {
     'targetTWA': {
       'name'        : 'Target TWA',
       'key'         : '53,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'performance.targetAngle'
     },
@@ -90,7 +90,7 @@ module.exports = function (app) {
     'tideRate': {
       'name'        : 'Tide Rate',
       'key'         : '83,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'm/s',
       'defaultPath' : ''
     },
@@ -98,7 +98,7 @@ module.exports = function (app) {
     'tideSet': {
       'name'        : 'Tide Set',
       'key'         : '84,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -106,7 +106,7 @@ module.exports = function (app) {
     'oppTackCOG': {
       'name'        : 'Opposite Tack COG',
       'key'         : '32,21',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -114,7 +114,7 @@ module.exports = function (app) {
     'nextLegBearing': {
       'name'        : 'Next Leg Bearing',
       'key'         : '35,21',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -122,15 +122,15 @@ module.exports = function (app) {
     'groundWindDirection': {
       'name'        : 'Ground Wind Direction',
       'key'         : '37,21',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
-      'defaultPath' : ''
+      'defaultPath' : 'environment.wind.directionGround'
     },
 
     'oppTackTarget': {
       'name'        : 'Opposite Tack Target heading',
       'key'         : '33,21',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'performance.tackTrue'
     },
@@ -138,16 +138,15 @@ module.exports = function (app) {
     'avgTrueWindDirection': {
       'name'        : 'Average True Wind Direction',
       'key'         : '50,21',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
 
-
     'course': {
       'name'        : 'Course',
       'key'         : '69,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'navigation.courseOverGroundTrue'
     },
@@ -155,15 +154,15 @@ module.exports = function (app) {
     'drBearing': {
       'name'        : 'Dead Reckoning bearing',
       'key'         : 'd3,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
 
     'drDistance': {
       'name'        : 'Dead Reckoning Distance',
-      'key'         : '81,40',
-      'length'      : 4,
+      'key'         : '81,20',
+      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -171,7 +170,7 @@ module.exports = function (app) {
     'biasAdvantage': {
       'name'        : 'Bias Advantage',
       'key'         : '31,21',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -179,7 +178,7 @@ module.exports = function (app) {
     'headingOppTack': {
       'name'        : 'Heading on Opposite Tack (True)',
       'key'         : '9a,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'performance.tackTrue'
     },
@@ -187,7 +186,7 @@ module.exports = function (app) {
     'tackingPerf': {
       'name'        : 'Tacking Performance',
       'key'         : '32,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'percent',
       'defaultPath' : ''
     },
@@ -195,7 +194,7 @@ module.exports = function (app) {
     'leewayAngle': {
       'name'        : 'Leeway Angle',
       'key'         : '82,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'navigation.leewayAngle'
     },
@@ -203,15 +202,23 @@ module.exports = function (app) {
     'heelAngle': {
       'name'        : 'Heel Angle',
       'key'         : '34,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
-      'defaultPath' : ''
+      'defaultPath' : 'navigation.attitude'
+    },
+
+    'trimAngle': {
+      'name'        : 'Trim Angle',
+      'key'         : '9b,20',
+      'length'      : 2,
+      'unit'        : 'rad',
+      'defaultPath' : 'navigation.attitude'
     },
 
     'oppWindAngle': {
       'name'        : 'Optimal Wind Angle',
       'key'         : '35,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -219,7 +226,7 @@ module.exports = function (app) {
     'mastRake': {
       'name'        : 'Mast Rake',
       'key'         : '34,21',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -227,7 +234,7 @@ module.exports = function (app) {
     'windAngleMast': {
       'name'        : 'Wind Angle to Mast',
       'key'         : '9d,20',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -235,7 +242,7 @@ module.exports = function (app) {
     'windPhase': {
       'name'        : 'Wind Phase',
       'key'         : '51,21',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -243,15 +250,15 @@ module.exports = function (app) {
     'windLift': {
       'name'        : 'Wind Lift',
       'key'         : '52,21',
-      'length'      : 4,
+      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
 
     'chainLength': {
       'name'        : 'Chain Length',
-      'key'         : '1c,41',
-      'length'      : 4,
+      'key'         : '1c,21',
+      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -261,25 +268,42 @@ module.exports = function (app) {
   function sendPerformance() {
     var performancePGN_2 = ""
     var length = 2
+    var value
 
     for (var type in supportedValues) {
       //app.debug('type: %s', type)
       if (typeof (globalOptions[type]) != 'undefined' && globalOptions[type]['enabled'] == true) {
-        // app.debug('globalOptions[%s] enabled', type);
         // Get value
-        var value = app.getSelfPath(globalOptions[type]['source'])
-        // app.debug('path: %s  value: %j', globalOptions[type]['source'], value);
+        var path = globalOptions[type]['path']
+        var source = globalOptions[type]['source']
+        app.debug('globalOptions[%s] enabled  path: %s  source: %s', type, path, source);
+        value = app.getSelfPath(path)
+        app.debug('path: %s  value: %j', path, value);
         if (typeof (value) != 'undefined') {
-          value = value.value
+          if (typeof (source) == 'undefined') {
+            value = value['value']
+          } else {
+            value = value['values'][source]['value']
+          }
+        }
+        if (path == 'navigation.attitude') {
+          if (type == 'heelAngle') {
+            value = value.roll
+          } else if (type == 'trimAngle') {
+            value = value.pitch
+          }
+        }
+        app.debug('path: %s  value: %j', path, value);
+        if (typeof (value) != 'undefined') {
           // We have a path with a working value
-          app.debug('path: %s  value: %j', globalOptions[type]['source'], value);
+          app.debug('path: %s  value: %j', path, value);
           // Add key to msg
           performancePGN_2 += ',' + supportedValues[type]['key']
           // Add value
           switch (supportedValues[type]['unit']) {
             case 'rad':
               var hex = radToHex(value)
-              app.debug('radToHex: %s %s', value, hex)
+              app.debug('radToDeg: %s radToHex: %s %s', radToDeg(value), value, hex)
               performancePGN_2 += ',' + hex
               break
 
@@ -290,8 +314,8 @@ module.exports = function (app) {
               break
               
             case 'm':
-              var hex = intTo4BHex(value * 100) // m to cm
-              //app.debug('m intToHex: %s %s', value, hex)
+              var hex = intToHex(value * 100) // m to cm
+              app.debug('m intToHex: %s %s', value, hex)
               performancePGN_2 += ',' + hex
               break
 
@@ -313,9 +337,11 @@ module.exports = function (app) {
     }
 
     // app.debug ('%j', globalOptions)
-    if (length > 4) {
+    if (length >= 4) {
       if (length <= 8) {
-        performancePGN_2 += 'ff,ff';
+        for (let x = length; x<10; x++) {
+          performancePGN_2 += ',ff'
+        }
         length = 10; // force multipacket
       }
       var msg = util.format(performancePGN + performancePGN_2, (new Date()).toISOString(), sourceAddress, padd((length & 0xff).toString(16), 2))
@@ -335,10 +361,14 @@ module.exports = function (app) {
             type: 'boolean',
             default: false
           },
+          path: {
+            type: 'string',
+            title: 'Use data from this path (leave blank to use default path)',
+            default: supportedValues[key]['defaultPath']
+          },
           source: {
             type: 'string',
-            title: 'Use data only from this source (leave blank to ignore source)',
-            default: supportedValues[key]['defaultPath']
+            title: 'Use data only from this source (leave blank if path has only one source)'
           }
         }
       }
@@ -398,9 +428,6 @@ function radToDeg(radians) {
 }
 
 function radToHex(rad) {
-  if (rad< 0) {
-    rad += (2 * Math.PI)
-  }
   return intToHex(Math.trunc(rad*10000))
 }
 

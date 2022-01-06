@@ -4,6 +4,8 @@ Generate B&amp;G performance PGNs to be displayed on Vulcan/Zeus/Triton2
 Not all B&G displayable values are currently available in SignalK's schema.
 Help with mapping is appreciated.
 
+In case of multiple sources for a path you can specify the source per path.
+
 Currently supported values:
 
  |B&G's data source name          | SignalK's map                     |
@@ -14,10 +16,10 @@ Currently supported values:
  |Chain Length                    |                                   |
  |Dead Reckoning bearing          |                                   |
  |Dead Reckoning distance         |                                   |
- |Ground Wind Direction						|                                   |
- |Ground Wind Speed						    |                                   |
+ |Ground Wind Direction						| environment.wind.directionGround  |
+ |Ground Wind Speed						    | environment.wind.speedOverGround  |
  |Heading on Opposite Tack (True) | performance.tackTrue              |
- |Heel Angle						          |                                   |
+ |Heel Angle						          | navigation.attitude               |
  |Leeway Angle                    | navigation.leewayAngle            |
  |Mast Rake						            |                                   |
  |Next Leg Bearing						    |                                   |
@@ -31,6 +33,7 @@ Currently supported values:
  |Target TWA                      | performance.beatAngle
  |Tide Rate						            |                                   |
  |Tide Set						            |                                   |
+ |Trim Angle                      | navigation.attitude               |
  |Velocity Made Good              | performance.velocityMadeGood      |
  |VMG Performance                 |                                   |
  |Wind Angle to Mast						  |                                   |
