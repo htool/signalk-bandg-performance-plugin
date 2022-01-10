@@ -292,10 +292,12 @@ module.exports = function (app) {
           }
         }
         if (path == 'navigation.attitude') {
-          if (type == 'heelAngle') {
-            value = value.roll
-          } else if (type == 'trimAngle') {
-            value = value.pitch
+          if (typeof (value) != 'undefined') {
+            if (type == 'heelAngle') {
+              value = value.roll
+            } else if (type == 'trimAngle') {
+              value = value.pitch
+            }
           }
         }
         app.debug('path: %s  value: %j', path, value);
