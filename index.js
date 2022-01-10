@@ -22,7 +22,7 @@ module.exports = function (app) {
       },
       sourceAddress: {
         type: "number",
-        title: "Source device id to use",
+        title: "Source device id to use. Potentially useful for Actisense output.",
         default: 1
       },
     }
