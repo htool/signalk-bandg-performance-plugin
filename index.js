@@ -309,8 +309,8 @@ module.exports = function (app) {
           // Add value
           switch (supportedValues[type]['unit']) {
             case 'rad':
-              var hex = radToHex(degToRad(value))
-              app.debug('degToRad: %s  radToHex: %s  deg: %s', degToRad(value), hex, value)
+              var hex = radToHex(value)
+              app.debug('radToDeg: %s radToHex: %s %s', radToDeg(value), value, hex)
               performancePGN_2 += ',' + hex
               break
 
