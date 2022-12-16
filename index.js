@@ -268,6 +268,70 @@ module.exports = function (app) {
       'defaultPath' : ''
     },
 
+    'user1': {
+      'name'        : 'User 1',
+      'key'         : '38,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user2': {
+      'name'        : 'User 2',
+      'key'         : '39,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user3': {
+      'name'        : 'User 3',
+      'key'         : '3a,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user4': {
+      'name'        : 'User 4',
+      'key'         : '3b,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'remote1': {
+      'name'        : 'Remote 1',
+      'key'         : 'ef,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'remote2': {
+      'name'        : 'Remote 2',
+      'key'         : 'f0,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'remote3': {
+      'name'        : 'Remote 3',
+      'key'         : 'f1,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'remote4': {
+      'name'        : 'Remote 4',
+      'key'         : 'f2,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    }
+
   };
 
   function sendPerformance() {
