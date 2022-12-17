@@ -6,6 +6,8 @@ Help with mapping is appreciated.
 
 In case of multiple sources for a path you can specify the source per path.
 
+To change the display name of User 1-32 and Remote 0-9 see [the rename plugin](https://www.npmjs.com/package/signalk-bandg-user-remote-rename).
+
 Currently supported values:
 
  |B&G's data source name          | SignalK's map                     |
@@ -39,3 +41,5 @@ Currently supported values:
  |Wind Angle to Mast						  |                                   |
  |Wind Lift                       |                                   |
  |Wind Phase                      |                                   |
+ |User 1-32                       |                                   |
+ |Remote 0-9                      |                                   |

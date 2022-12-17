@@ -35,12 +35,60 @@ module.exports = function (app) {
 
   let supportedValues = {
 
-    'vmg': {
-      'name'        : 'Velocity Made Good',
-      'key'         : '7f,20',
+    'avgTrueWindDirection': {
+      'name'        : 'Average True Wind Direction',
+      'key'         : '50,21',
       'length'      : 2,
-      'unit'        : 'm/s',
-      'defaultPath' : 'performance.velocityMadeGood'
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
+
+    'biasAdvantage': {
+      'name'        : 'Bias Advantage',
+      'key'         : '31,21',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'chainLength': {
+      'name'        : 'Chain Length',
+      'key'         : '1c,21',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'course': {
+      'name'        : 'Course',
+      'key'         : '69,20',
+      'length'      : 2,
+      'unit'        : 'rad',
+      'defaultPath' : 'navigation.courseOverGroundTrue'
+    },
+
+    'drBearing': {
+      'name'        : 'Dead Reckoning bearing',
+      'key'         : 'd3,20',
+      'length'      : 2,
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
+
+    'drDistance': {
+      'name'        : 'Dead Reckoning Distance',
+      'key'         : '81,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'groundWindDirection': {
+      'name'        : 'Ground Wind Direction',
+      'key'         : '37,21',
+      'length'      : 2,
+      'unit'        : 'rad',
+      'defaultPath' : 'environment.wind.directionGround'
     },
 
     'groundWind': {
@@ -51,6 +99,45 @@ module.exports = function (app) {
       'defaultPath' : 'environment.wind.speedOverGround'
     },
 
+    'headingOppTack': {
+      'name'        : 'Heading on Opposite Tack (True)',
+      'key'         : '9a,20',
+      'length'      : 2,
+      'unit'        : 'rad',
+      'defaultPath' : 'performance.tackTrue'
+    },
+
+    'heelAngle': {
+      'name'        : 'Heel Angle',
+      'key'         : '34,20',
+      'length'      : 2,
+      'unit'        : 'rad',
+      'defaultPath' : 'navigation.attitude'
+    },
+
+    'leewayAngle': {
+      'name'        : 'Leeway Angle',
+      'key'         : '82,20',
+      'length'      : 2,
+      'unit'        : 'rad',
+      'defaultPath' : 'navigation.leewayAngle'
+    },
+
+    'mastRake': {
+      'name'        : 'Mast Rake',
+      'key'         : '34,21',
+      'length'      : 2,
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
+
+    'nextLegBearing': {
+      'name'        : 'Next Leg Bearing',
+      'key'         : '35,21',
+      'length'      : 2,
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
 
     'nextLegTargetSpeed': {
       'name'        : 'Next Leg Target Speed',
@@ -60,11 +147,27 @@ module.exports = function (app) {
       'defaultPath' : ''
     },
 
-    'vmgperf': {
-      'name'        : 'VMG Performance',
-      'key'         : '1d,21',
+    'oppTackCOG': {
+      'name'        : 'Opposite Tack COG',
+      'key'         : '32,21',
       'length'      : 2,
-      'unit'        : 'percent',
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
+
+    'oppTackTarget': {
+      'name'        : 'Opposite Tack Target heading',
+      'key'         : '33,21',
+      'length'      : 2,
+      'unit'        : 'rad',
+      'defaultPath' : 'performance.tackTrue'
+    },
+
+    'oppWindAngle': {
+      'name'        : 'Optimal Wind Angle',
+      'key'         : '35,20',
+      'length'      : 2,
+      'unit'        : 'rad',
       'defaultPath' : ''
     },
 
@@ -108,108 +211,12 @@ module.exports = function (app) {
       'defaultPath' : ''
     },
 
-    'oppTackCOG': {
-      'name'        : 'Opposite Tack COG',
-      'key'         : '32,21',
-      'length'      : 2,
-      'unit'        : 'rad',
-      'defaultPath' : ''
-    },
-
-    'nextLegBearing': {
-      'name'        : 'Next Leg Bearing',
-      'key'         : '35,21',
-      'length'      : 2,
-      'unit'        : 'rad',
-      'defaultPath' : ''
-    },
-
-    'groundWindDirection': {
-      'name'        : 'Ground Wind Direction',
-      'key'         : '37,21',
-      'length'      : 2,
-      'unit'        : 'rad',
-      'defaultPath' : 'environment.wind.directionGround'
-    },
-
-    'oppTackTarget': {
-      'name'        : 'Opposite Tack Target heading',
-      'key'         : '33,21',
-      'length'      : 2,
-      'unit'        : 'rad',
-      'defaultPath' : 'performance.tackTrue'
-    },
-
-    'avgTrueWindDirection': {
-      'name'        : 'Average True Wind Direction',
-      'key'         : '50,21',
-      'length'      : 2,
-      'unit'        : 'rad',
-      'defaultPath' : ''
-    },
-
-    'course': {
-      'name'        : 'Course',
-      'key'         : '69,20',
-      'length'      : 2,
-      'unit'        : 'rad',
-      'defaultPath' : 'navigation.courseOverGroundTrue'
-    },
-
-    'drBearing': {
-      'name'        : 'Dead Reckoning bearing',
-      'key'         : 'd3,20',
-      'length'      : 2,
-      'unit'        : 'rad',
-      'defaultPath' : ''
-    },
-
-    'drDistance': {
-      'name'        : 'Dead Reckoning Distance',
-      'key'         : '81,20',
-      'length'      : 2,
-      'unit'        : 'm',
-      'defaultPath' : ''
-    },
-
-    'biasAdvantage': {
-      'name'        : 'Bias Advantage',
-      'key'         : '31,21',
-      'length'      : 2,
-      'unit'        : 'm',
-      'defaultPath' : ''
-    },
-
-    'headingOppTack': {
-      'name'        : 'Heading on Opposite Tack (True)',
-      'key'         : '9a,20',
-      'length'      : 2,
-      'unit'        : 'rad',
-      'defaultPath' : 'performance.tackTrue'
-    },
-
     'tackingPerf': {
       'name'        : 'Tacking Performance',
       'key'         : '32,20',
       'length'      : 2,
       'unit'        : 'percent',
       'defaultPath' : ''
-    },
-
-    'leewayAngle': {
-      'name'        : 'Leeway Angle',
-      'key'         : '82,20',
-      'length'      : 2,
-      'unit'        : 'rad',
-      'defaultPath' : 'navigation.leewayAngle'
-    },
-
-    'heelAngle': {
-      'name'        : 'Heel Angle',
-      'key'         : '34,20',
-      'length'      : 2,
-      'unit'        : 'rad',
-      'defaultPath' : 'navigation.attitude'
     },
 
     'trimAngle': {
@@ -220,19 +227,19 @@ module.exports = function (app) {
       'defaultPath' : 'navigation.attitude'
     },
 
-    'oppWindAngle': {
-      'name'        : 'Optimal Wind Angle',
-      'key'         : '35,20',
+    'vmg': {
+      'name'        : 'Velocity Made Good',
+      'key'         : '7f,20',
       'length'      : 2,
-      'unit'        : 'rad',
-      'defaultPath' : ''
+      'unit'        : 'm/s',
+      'defaultPath' : 'performance.velocityMadeGood'
     },
 
-    'mastRake': {
-      'name'        : 'Mast Rake',
-      'key'         : '34,21',
+    'vmgperf': {
+      'name'        : 'VMG Performance',
+      'key'         : '1d,21',
       'length'      : 2,
-      'unit'        : 'rad',
+      'unit'        : 'percent',
       'defaultPath' : ''
     },
 
@@ -257,14 +264,6 @@ module.exports = function (app) {
       'key'         : '52,21',
       'length'      : 2,
       'unit'        : 'rad',
-      'defaultPath' : ''
-    },
-
-    'chainLength': {
-      'name'        : 'Chain Length',
-      'key'         : '1c,21',
-      'length'      : 2,
-      'unit'        : 'm',
       'defaultPath' : ''
     },
 
@@ -300,6 +299,238 @@ module.exports = function (app) {
       'defaultPath' : ''
     },
 
+    'user5': {
+      'name'        : 'User 5',
+      'key'         : '10,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user6': {
+      'name'        : 'User 6',
+      'key'         : '11,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user7': {
+      'name'        : 'User 7',
+      'key'         : '12,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user8': {
+      'name'        : 'User 8',
+      'key'         : '13,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user9': {
+      'name'        : 'User 9',
+      'key'         : '14,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user10': {
+      'name'        : 'User 10',
+      'key'         : '15,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user11': {
+      'name'        : 'User 11',
+      'key'         : '16,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user12': {
+      'name'        : 'User 12',
+      'key'         : '17,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user13': {
+      'name'        : 'User 13',
+      'key'         : '18,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user14': {
+      'name'        : 'User 14',
+      'key'         : '19,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user15': {
+      'name'        : 'User 15',
+      'key'         : '1a,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user16': {
+      'name'        : 'User 16',
+      'key'         : '1b,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user17': {
+      'name'        : 'User 17',
+      'key'         : '13,0d',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user18': {
+      'name'        : 'User 18',
+      'key'         : '13,0e',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user19': {
+      'name'        : 'User 19',
+      'key'         : '0d,33',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user20': {
+      'name'        : 'User 20',
+      'key'         : '0e,33',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user21': {
+      'name'        : 'User 21',
+      'key'         : '0f,33',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user22': {
+      'name'        : 'User 22',
+      'key'         : '00,34',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user23': {
+      'name'        : 'User 23',
+      'key'         : '01,34',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user24': {
+      'name'        : 'User 24',
+      'key'         : '02,34',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user25': {
+      'name'        : 'User 25',
+      'key'         : '03,34',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user26': {
+      'name'        : 'User 26',
+      'key'         : '04,34',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user27': {
+      'name'        : 'User 27',
+      'key'         : '05,34',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user28': {
+      'name'        : 'User 28',
+      'key'         : '06,34',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user29': {
+      'name'        : 'User 29',
+      'key'         : '07,34',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user30': {
+      'name'        : 'User 30',
+      'key'         : '08,34',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user31': {
+      'name'        : 'User 31',
+      'key'         : '09,34',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'user32': {
+      'name'        : 'User 32',
+      'key'         : '0a,34',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'remote0': {
+      'name'        : 'Remote 0',
+      'key'         : 'df,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
     'remote1': {
       'name'        : 'Remote 1',
       'key'         : 'ef,20',
@@ -327,6 +558,46 @@ module.exports = function (app) {
     'remote4': {
       'name'        : 'Remote 4',
       'key'         : 'f2,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'remote5': {
+      'name'        : 'Remote 5',
+      'key'         : 'f3,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'remote6': {
+      'name'        : 'Remote 6',
+      'key'         : 'f4,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'remote7': {
+      'name'        : 'Remote 7',
+      'key'         : 'f5,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'remote8': {
+      'name'        : 'Remote 8',
+      'key'         : 'f6,20',
+      'length'      : 2,
+      'unit'        : 'm',
+      'defaultPath' : ''
+    },
+
+    'remote9': {
+      'name'        : 'Remote 9',
+      'key'         : 'f7,20',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -422,7 +693,7 @@ module.exports = function (app) {
 
 
   function updateSchema() {
-    Object.keys(supportedValues).sort().forEach(key => {
+    Object.keys(supportedValues).forEach(key => {
       var obj =  {
         type: 'object',
         title: supportedValues[key]['name'],
