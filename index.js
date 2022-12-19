@@ -59,12 +59,28 @@ module.exports = function (app) {
       'defaultPath' : ''
     },
 
+    'codeZeroLoad': {
+      'name'        : 'Code Zero Load',
+      'key'         : '2a,21',
+      'length'      : 2,
+      'unit'        : '',
+      'defaultPath' : ''
+    },
+
     'course': {
       'name'        : 'Course',
       'key'         : '69,20',
       'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'navigation.courseOverGroundTrue'
+    },
+
+    'cunningham': {
+      'name'        : 'Cunningham',
+      'key'         : '24,21',
+      'length'      : 2,
+      'unit'        : '',
+      'defaultPath' : ''
     },
 
     'drBearing': {
@@ -113,6 +129,14 @@ module.exports = function (app) {
       'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'navigation.attitude'
+    },
+
+    'jacuzziTemperature': {
+      'name'        : 'Jacuzzi Temperature',
+      'key'         : '25,21',
+      'length'      : 2,
+      'unit'        : 'celcius',
+      'defaultPath' : 'environment.jacuzzi.temperature'
     },
 
     'leewayAngle': {
@@ -171,6 +195,22 @@ module.exports = function (app) {
       'defaultPath' : ''
     },
 
+    'outhaulLoad': {
+      'name'        : 'Outhaul Load',
+      'key'         : '22,21',
+      'length'      : 2,
+      'unit'        : '',
+      'defaultPath' : ''
+    },
+
+    'plowAngle': {
+      'name'        : 'Plow Angle',
+      'key'         : '23,21',
+      'length'      : 2,
+      'unit'        : 'rad',
+      'defaultPath' : ''
+    },
+
     'polarSpeed': {
       'name'        : 'Polar Boat Speed',
       'key'         : '7e,20',
@@ -185,6 +225,14 @@ module.exports = function (app) {
       'length'      : 2,
       'unit'        : 'percent',
       'defaultPath' : 'performance.polarPerformance'
+    },
+
+    'poolTemperature': {
+      'name'        : 'Pool Temperature',
+      'key'         : '26,21',
+      'length'      : 2,
+      'unit'        : 'celcius',
+      'defaultPath' : 'environment.pool.temperature'
     },
 
     'targetTWA': {
@@ -397,7 +445,7 @@ module.exports = function (app) {
 
     'user17': {
       'name'        : 'User 17',
-      'key'         : '13,0d',
+      'key'         : '3d,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -405,7 +453,7 @@ module.exports = function (app) {
 
     'user18': {
       'name'        : 'User 18',
-      'key'         : '13,0e',
+      'key'         : '3e,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -413,7 +461,7 @@ module.exports = function (app) {
 
     'user19': {
       'name'        : 'User 19',
-      'key'         : '0d,33',
+      'key'         : '3f,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -421,7 +469,7 @@ module.exports = function (app) {
 
     'user20': {
       'name'        : 'User 20',
-      'key'         : '0e,33',
+      'key'         : '40,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -429,7 +477,7 @@ module.exports = function (app) {
 
     'user21': {
       'name'        : 'User 21',
-      'key'         : '0f,33',
+      'key'         : '41,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -437,7 +485,7 @@ module.exports = function (app) {
 
     'user22': {
       'name'        : 'User 22',
-      'key'         : '00,34',
+      'key'         : '42,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -445,7 +493,7 @@ module.exports = function (app) {
 
     'user23': {
       'name'        : 'User 23',
-      'key'         : '01,34',
+      'key'         : '43,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -453,7 +501,7 @@ module.exports = function (app) {
 
     'user24': {
       'name'        : 'User 24',
-      'key'         : '02,34',
+      'key'         : '44,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -461,7 +509,7 @@ module.exports = function (app) {
 
     'user25': {
       'name'        : 'User 25',
-      'key'         : '03,34',
+      'key'         : '45,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -469,7 +517,7 @@ module.exports = function (app) {
 
     'user26': {
       'name'        : 'User 26',
-      'key'         : '04,34',
+      'key'         : '46,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -477,7 +525,7 @@ module.exports = function (app) {
 
     'user27': {
       'name'        : 'User 27',
-      'key'         : '05,34',
+      'key'         : '47,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -485,7 +533,7 @@ module.exports = function (app) {
 
     'user28': {
       'name'        : 'User 28',
-      'key'         : '06,34',
+      'key'         : '48,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -493,7 +541,7 @@ module.exports = function (app) {
 
     'user29': {
       'name'        : 'User 29',
-      'key'         : '07,34',
+      'key'         : '49,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -501,7 +549,7 @@ module.exports = function (app) {
 
     'user30': {
       'name'        : 'User 30',
-      'key'         : '08,34',
+      'key'         : '4a,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -509,7 +557,7 @@ module.exports = function (app) {
 
     'user31': {
       'name'        : 'User 31',
-      'key'         : '09,34',
+      'key'         : '4b,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -517,7 +565,7 @@ module.exports = function (app) {
 
     'user32': {
       'name'        : 'User 32',
-      'key'         : '0a,34',
+      'key'         : '4c,21',
       'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
@@ -658,6 +706,18 @@ module.exports = function (app) {
             case 'm':
               var hex = intToHex(value * 100) // m to cm
               app.debug('m intToHex: %s %s', value, hex)
+              performancePGN_2 += ',' + hex
+              break
+
+            case 'celcius':
+              var hex = intToHex(value * 100) // Celcius in Kelvin
+              app.debug('celcius intToHex: %s %s', value, hex)
+              performancePGN_2 += ',' + hex
+              break
+
+            case '':
+              var hex = intToHex(value * 1000) 
+              app.debug('intToHex: %s %s', value, hex)
               performancePGN_2 += ',' + hex
               break
 
