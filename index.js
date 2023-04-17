@@ -36,7 +36,7 @@ module.exports = function (app) {
   let supportedValues = {
 
     'avgTrueWindDirection': {
-      'name'        : 'Average True Wind Direction',
+      'name'        : 'Average True Wind Direction (rad)',
       'key'         : '50,21',
       'length'      : 2,
       'unit'        : 'rad',
@@ -44,7 +44,7 @@ module.exports = function (app) {
     },
 
     'biasAdvantage': {
-      'name'        : 'Bias Advantage',
+      'name'        : 'Bias Advantage (m)',
       'key'         : '31,21',
       'length'      : 2,
       'unit'        : 'm',
@@ -52,7 +52,7 @@ module.exports = function (app) {
     },
 
     'chainLength': {
-      'name'        : 'Chain Length',
+      'name'        : 'Chain Length (m)',
       'key'         : '1c,21',
       'length'      : 2,
       'unit'        : 'm',
@@ -68,7 +68,7 @@ module.exports = function (app) {
     },
 
     'course': {
-      'name'        : 'Course',
+      'name'        : 'Course (rad)',
       'key'         : '69,20',
       'length'      : 2,
       'unit'        : 'rad',
@@ -84,7 +84,7 @@ module.exports = function (app) {
     },
 
     'drBearing': {
-      'name'        : 'Dead Reckoning bearing',
+      'name'        : 'Dead Reckoning bearing (rad)',
       'key'         : 'd3,20',
       'length'      : 2,
       'unit'        : 'rad',
@@ -92,7 +92,7 @@ module.exports = function (app) {
     },
 
     'drDistance': {
-      'name'        : 'Dead Reckoning Distance',
+      'name'        : 'Dead Reckoning Distance (m)',
       'key'         : '81,20',
       'length'      : 2,
       'unit'        : 'm',
@@ -100,7 +100,7 @@ module.exports = function (app) {
     },
 
     'groundWindDirection': {
-      'name'        : 'Ground Wind Direction',
+      'name'        : 'Ground Wind Direction (rad)',
       'key'         : '37,21',
       'length'      : 2,
       'unit'        : 'rad',
@@ -108,7 +108,7 @@ module.exports = function (app) {
     },
 
     'groundWind': {
-      'name'        : 'Ground Wind Speed',
+      'name'        : 'Ground Wind Speed (m/s)',
       'key'         : '38,21',
       'length'      : 2,
       'unit'        : 'm/s',
@@ -116,7 +116,7 @@ module.exports = function (app) {
     },
 
     'headingOppTack': {
-      'name'        : 'Heading on Opposite Tack (True)',
+      'name'        : 'Heading on Opposite Tack (True) (rad)',
       'key'         : '9a,20',
       'length'      : 2,
       'unit'        : 'rad',
@@ -124,7 +124,7 @@ module.exports = function (app) {
     },
 
     'heelAngle': {
-      'name'        : 'Heel Angle',
+      'name'        : 'Heel Angle (rad)',
       'key'         : '34,20',
       'length'      : 2,
       'unit'        : 'rad',
@@ -132,7 +132,7 @@ module.exports = function (app) {
     },
 
     'jacuzziTemperature': {
-      'name'        : 'Jacuzzi Temperature',
+      'name'        : 'Jacuzzi Temperature (Kelvin)',
       'key'         : '25,21',
       'length'      : 2,
       'unit'        : 'celcius',
@@ -140,7 +140,7 @@ module.exports = function (app) {
     },
 
     'leewayAngle': {
-      'name'        : 'Leeway Angle',
+      'name'        : 'Leeway Angle (rad)',
       'key'         : '82,20',
       'length'      : 2,
       'unit'        : 'rad',
@@ -148,7 +148,7 @@ module.exports = function (app) {
     },
 
     'mastRake': {
-      'name'        : 'Mast Rake',
+      'name'        : 'Mast Rake (rad)',
       'key'         : '34,21',
       'length'      : 2,
       'unit'        : 'rad',
@@ -156,7 +156,7 @@ module.exports = function (app) {
     },
 
     'nextLegBearing': {
-      'name'        : 'Next Leg Bearing',
+      'name'        : 'Next Leg Bearing (rad)',
       'key'         : '35,21',
       'length'      : 2,
       'unit'        : 'rad',
@@ -164,7 +164,7 @@ module.exports = function (app) {
     },
 
     'nextLegTargetSpeed': {
-      'name'        : 'Next Leg Target Speed',
+      'name'        : 'Next Leg Target Speed (m/s)',
       'key'         : '36,21',
       'length'      : 2,
       'unit'        : 'm/s',
@@ -172,7 +172,7 @@ module.exports = function (app) {
     },
 
     'oppTackCOG': {
-      'name'        : 'Opposite Tack COG',
+      'name'        : 'Opposite Tack COG (rad)',
       'key'         : '32,21',
       'length'      : 2,
       'unit'        : 'rad',
@@ -180,7 +180,7 @@ module.exports = function (app) {
     },
 
     'oppTackTarget': {
-      'name'        : 'Opposite Tack Target heading',
+      'name'        : 'Opposite Tack Target heading (rad)',
       'key'         : '33,21',
       'length'      : 2,
       'unit'        : 'rad',
@@ -188,7 +188,7 @@ module.exports = function (app) {
     },
 
     'oppWindAngle': {
-      'name'        : 'Optimal Wind Angle',
+      'name'        : 'Optimal Wind Angle (rad)',
       'key'         : '35,20',
       'length'      : 2,
       'unit'        : 'rad',
@@ -204,7 +204,7 @@ module.exports = function (app) {
     },
 
     'plowAngle': {
-      'name'        : 'Plow Angle',
+      'name'        : 'Plow Angle (rad)',
       'key'         : '23,21',
       'length'      : 2,
       'unit'        : 'rad',
@@ -212,7 +212,7 @@ module.exports = function (app) {
     },
 
     'polarSpeed': {
-      'name'        : 'Polar Boat Speed',
+      'name'        : 'Polar Boat Speed (m/s)',
       'key'         : '7e,20',
       'length'      : 2,
       'unit'        : 'm/s',
@@ -220,7 +220,7 @@ module.exports = function (app) {
     },
 
     'polarPerformance': {
-      'name'        : 'Polar Performance',
+      'name'        : 'Polar Performance (ratio)',
       'key'         : '7c,20',
       'length'      : 2,
       'unit'        : 'percent',
@@ -228,7 +228,7 @@ module.exports = function (app) {
     },
 
     'poolTemperature': {
-      'name'        : 'Pool Temperature',
+      'name'        : 'Pool Temperature (Kelvin)',
       'key'         : '26,21',
       'length'      : 2,
       'unit'        : 'celcius',
@@ -236,7 +236,7 @@ module.exports = function (app) {
     },
 
     'targetTWA': {
-      'name'        : 'Target TWA',
+      'name'        : 'Target TWA (rad)',
       'key'         : '53,20',
       'length'      : 2,
       'unit'        : 'rad',
@@ -244,7 +244,7 @@ module.exports = function (app) {
     },
 
     'tideRate': {
-      'name'        : 'Tide Rate',
+      'name'        : 'Tide Rate (m/s)',
       'key'         : '83,20',
       'length'      : 2,
       'unit'        : 'm/s',
@@ -252,7 +252,7 @@ module.exports = function (app) {
     },
 
     'tideSet': {
-      'name'        : 'Tide Set',
+      'name'        : 'Tide Set (rad)',
       'key'         : '84,20',
       'length'      : 2,
       'unit'        : 'rad',
@@ -260,7 +260,7 @@ module.exports = function (app) {
     },
 
     'tackingPerf': {
-      'name'        : 'Tacking Performance',
+      'name'        : 'Tacking Performance (ratio)',
       'key'         : '32,20',
       'length'      : 2,
       'unit'        : 'percent',
@@ -268,7 +268,7 @@ module.exports = function (app) {
     },
 
     'trimAngle': {
-      'name'        : 'Trim Angle',
+      'name'        : 'Trim Angle (rad)',
       'key'         : '9b,20',
       'length'      : 2,
       'unit'        : 'rad',
@@ -276,7 +276,7 @@ module.exports = function (app) {
     },
 
     'vmg': {
-      'name'        : 'Velocity Made Good',
+      'name'        : 'Velocity Made Good (m/s)',
       'key'         : '7f,20',
       'length'      : 2,
       'unit'        : 'm/s',
@@ -284,7 +284,7 @@ module.exports = function (app) {
     },
 
     'vmgperf': {
-      'name'        : 'VMG Performance',
+      'name'        : 'VMG Performance (ratio)',
       'key'         : '1d,21',
       'length'      : 2,
       'unit'        : 'percent',
@@ -292,7 +292,7 @@ module.exports = function (app) {
     },
 
     'windAngleMast': {
-      'name'        : 'Wind Angle to Mast',
+      'name'        : 'Wind Angle to Mast (rad)',
       'key'         : '9d,20',
       'length'      : 2,
       'unit'        : 'rad',
@@ -300,7 +300,7 @@ module.exports = function (app) {
     },
 
     'windPhase': {
-      'name'        : 'Wind Phase',
+      'name'        : 'Wind Phase (rad)',
       'key'         : '51,21',
       'length'      : 2,
       'unit'        : 'rad',
@@ -308,7 +308,7 @@ module.exports = function (app) {
     },
 
     'windLift': {
-      'name'        : 'Wind Lift',
+      'name'        : 'Wind Lift (rad)',
       'key'         : '52,21',
       'length'      : 2,
       'unit'        : 'rad',
