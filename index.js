@@ -191,7 +191,7 @@ module.exports = function (app) {
       'name'        : 'Optimum Wind Angle (rad)',
       'key'         : '35,20',
       'length'      : 2,
-      'unit'        : 'rad',
+      'unit'        : 'signedRad',
       'defaultPath' : 'performance.optimumWindAngle'
     },
 
@@ -653,6 +653,7 @@ module.exports = function (app) {
 
   };
 
+
   function sendPerformance() {
     var performancePGN_2 = ""
     var length = 2
@@ -666,7 +667,6 @@ module.exports = function (app) {
         var source = globalOptions[type]['source']
         app.debug('globalOptions[%s] enabled  path: %s  source: %s', type, path, source);
         value = app.getSelfPath(path)
-        app.debug('path: %s  value: %j', path, value);
         if (typeof (value) != 'undefined') {
           if (typeof (source) == 'undefined') {
             value = value['value']
@@ -694,6 +694,12 @@ module.exports = function (app) {
             case 'rad':
               var hex = radToHex(value)
               app.debug('radToDeg: %s radToHex: %s %s', radToDeg(value), value, hex)
+              performancePGN_2 += ',' + hex
+              break
+
+            case 'signedRad':
+              var hex = signedRadToHex(value)
+              app.debug('radToDeg: %s radToHex: %s %s', signedRadToDeg(value), value, hex)
               performancePGN_2 += ',' + hex
               break
 
@@ -799,6 +805,7 @@ module.exports = function (app) {
     timers.push(setInterval(() => {
       sendPerformance(); 
     }, 500))
+
   };
 
 
@@ -831,7 +838,22 @@ function radToDeg(radians) {
   return radians * 180 / Math.PI
 }
 
+function signedRadToDeg(radians) {
+  let deg = radians * 180 / Math.PI
+  if (deg < 0) {
+    deg = 360 + deg
+  }
+  return deg
+}
+
 function radToHex(rad) {
+  return intToHex(Math.trunc(rad*10000))
+}
+
+function signedRadToHex(rad) {
+  if (rad < 0) {
+    rad = (2*Math.PI) + rad
+  }
   return intToHex(Math.trunc(rad*10000))
 }
 
