@@ -188,11 +188,11 @@ module.exports = function (app) {
     },
 
     'oppWindAngle': {
-      'name'        : 'Optimal Wind Angle (rad)',
+      'name'        : 'Optimum Wind Angle (rad)',
       'key'         : '35,20',
       'length'      : 2,
       'unit'        : 'rad',
-      'defaultPath' : ''
+      'defaultPath' : 'performance.optimumWindAngle'
     },
 
     'outhaulLoad': {
@@ -288,7 +288,7 @@ module.exports = function (app) {
       'key'         : '1d,21',
       'length'      : 2,
       'unit'        : 'percent',
-      'defaultPath' : ''
+      'defaultPath' : 'performance.velocityMadeGoodRatio'
     },
 
     'windAngleMast': {
@@ -765,7 +765,7 @@ module.exports = function (app) {
           },
           path: {
             type: 'string',
-            title: 'Use data from this path (leave blank to use default path)',
+            title: 'Use data from this path',
             default: supportedValues[key]['defaultPath']
           },
           source: {

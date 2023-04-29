@@ -29,7 +29,7 @@ Next Leg Bearing
 Next Leg Target Speed
 Opposite Tack COG
 Opposite Tack Target heading
-Optimal Wind Angle
+Optimum Wind Angle
 Outhaul Load
 Plow Angle
 Polar Boat Speed
