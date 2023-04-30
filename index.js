@@ -224,7 +224,7 @@ module.exports = function (app) {
       'key'         : '7c,20',
       'length'      : 2,
       'unit'        : 'percent',
-      'defaultPath' : 'performance.polarPerformance'
+      'defaultPath' : 'performance.polarSpeedRatio'
     },
 
     'poolTemperature': {
@@ -665,7 +665,7 @@ module.exports = function (app) {
         // Get value
         var path = globalOptions[type]['path']
         var source = globalOptions[type]['source']
-        app.debug('globalOptions[%s] enabled  path: %s  source: %s', type, path, source);
+        app.debug('globalOptions[%s] enabled  path: %s  source: %s', type, path, source || 'n/a');
         value = app.getSelfPath(path)
         if (typeof (value) != 'undefined') {
           if (typeof (source) == 'undefined') {
@@ -760,6 +760,11 @@ module.exports = function (app) {
 
   function updateSchema() {
     Object.keys(supportedValues).forEach(key => {
+      let defaultPath = supportedValues[key]['defaultPath']
+      if (typeof defaultPath == 'undefined') {
+        defaultPath = 'n/a'
+      }
+
       var obj =  {
         type: 'object',
         title: supportedValues[key]['name'],
@@ -772,7 +777,8 @@ module.exports = function (app) {
           path: {
             type: 'string',
             title: 'Use data from this path',
-            default: supportedValues[key]['defaultPath']
+            description: 'Leave blank to use default (' +defaultPath + ')',
+            default: defaultPath
           },
           source: {
             type: 'string',
@@ -795,11 +801,13 @@ module.exports = function (app) {
 
   plugin.start = function (options, restartPlugin) {
     // Here we put our plugin logic
-    app.debug('Plugin started');
-    var unsubscribes = [];
+    app.debug('Plugin started')
+    var unsubscribes = []
 
-    globalOptions = options;
-    sourceAddress = globalOptions['sourceAddress']
+    globalOptions = options
+    app.debug('Options: %s', JSON.stringify(globalOptions))
+
+    sourceAddress = globalOptions['sourceAddress'] || 1
     app.debug('Using device id: %d', sourceAddress)
 
     timers.push(setInterval(() => {
