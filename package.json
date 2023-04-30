@@ -1,6 +1,6 @@
 {
   "name": "signalk-bandg-performance-plugin",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "Generate B&G performance PGNs to display on Vulcan/Zeus/Triton2",
   "main": "index.js",
   "scripts": {

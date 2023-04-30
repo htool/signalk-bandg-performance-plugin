@@ -761,7 +761,7 @@ module.exports = function (app) {
   function updateSchema() {
     Object.keys(supportedValues).forEach(key => {
       let defaultPath = supportedValues[key]['defaultPath']
-      if (typeof defaultPath == 'undefined') {
+      if (defaultPath == '') {
         defaultPath = 'n/a'
       }
 
