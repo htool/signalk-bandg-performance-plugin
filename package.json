@@ -24,6 +24,7 @@
     "signalk-category-hardware"
   ],
   "dependencies": {
+    "@canboat/canboatjs": "^1.27.0",
     "lodash": "^4.17.21"
   }
 }

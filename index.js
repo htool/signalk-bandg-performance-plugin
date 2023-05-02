@@ -1,13 +1,15 @@
 const util = require('util')
 const _ = require('lodash')
-var sourceAddress
 var globalOptions = []
 const performancePGN = '%s,3,130824,%s,255,%s,7d,99'
+const keepAlivePGN = '%s,7,65305,%s,255,08,41,9f,01,17,1c,01,00,00'
 
 module.exports = function (app) {
   var plugin = {}
   var unsubscribes = []
   var timers = []
+  var sourceAddress = 1
+  var simpleCan
 
   plugin.id = 'signalk-bandg-performance-plugin';
   plugin.name = 'B&G performance PGN plugin';
@@ -20,17 +22,21 @@ module.exports = function (app) {
         'title': 'Select which data to send and what to use as path and source device. Source device can be specified when a path has multiple value sources. For explanations of the data you can check the B&G H5000 Operation manual here:\nhttps://softwaredownloads.navico.com/BG/downloads/documents/H5000_OM_EN_988-10630-002_w.pdf',
         'type': 'null',
       },
+      emulate: {
+        type: "boolean",
+        title: "Enabled B&G H5000 device emulation (only on canbus)"
+      },
+      candevice: {
+        type: "string",
+        title: "Candevice to use for B&G H5000 device emulation (leave empty for autodetect)"
+      },
       sourceAddress: {
         type: "number",
-        title: "Source device id to use. Potentially useful for Actisense output.",
-        default: 1
+        title: "Source device id for B&G H5000 device emulation to use.",
+        default: 14
       },
+      
     }
-  }
-
-  function sendN2k(msgs) {
-    app.debug("n2k_msg: " + msgs)
-    msgs.map(function(msg) { app.emit('nmea2000out', msg)})
   }
 
   let supportedValues = {
@@ -752,8 +758,8 @@ module.exports = function (app) {
         }
         length = 10; // force multipacket
       }
-      var msg = util.format(performancePGN + performancePGN_2, (new Date()).toISOString(), sourceAddress, padd((length & 0xff).toString(16), 2))
-      sendN2k([msg])
+      let msg = util.format(performancePGN + performancePGN_2, (new Date()).toISOString(), sourceAddress, padd((length & 0xff).toString(16), 2))
+      simpleCan.sendPGN(msg)
     }
   }
 
@@ -803,18 +809,87 @@ module.exports = function (app) {
     // Here we put our plugin logic
     app.debug('Plugin started')
     var unsubscribes = []
-
     globalOptions = options
     app.debug('Options: %s', JSON.stringify(globalOptions))
 
-    sourceAddress = globalOptions['sourceAddress'] || 1
-    app.debug('Using device id: %d', sourceAddress)
+    if (options.emulate == true) {
+      const SimpleCan = require('@canboat/canboatjs').SimpleCan
+      app.debug('Using device id: %d', options.sourceAddress)
+      sourceAddress = options.sourceAddress || 14
+
+      var deviceAddress
+      var canDevice
+
+	    if (typeof options.candevice != 'undefined' && options.candevice != "") {
+	      canDevice = options.candevice
+	      app.debug('Using configured canDevice: %s', canDevice)
+	    } else {
+	      // app.debug('%j', app.config.settings.pipedProviders)
+	      app.debug('Trying to detect canDevice')
+	      app.config.settings.pipedProviders.forEach(provider => {
+	        if (provider.enabled == true) {
+	          provider.pipeElements.forEach(element => {
+	            if (element.type == 'providers/canbus' && typeof deviceAddress == 'undefined') {
+	              app.debug('Found provider/canbus')
+	              if (typeof element.options.canDevice != 'undefined') {
+		              app.debug('element.options.canDevice: %s', element.options.canDevice)
+	                canDevice = element.options.canDevice
+	              }
+	            }
+	          })
+	        }
+	      })
+      }
+
+	    simpleCan = new SimpleCan({
+	      app,
+	      canDevice: canDevice,
+	      preferredAddress: sourceAddress,
+	      transmitPGNs: [ 126996 ],
+	      addressClaim: {
+	        'Unique Number': 1731561,
+	        'Manufacturer Code': 'Navico',
+	        'Device Function': 190,
+	        'Device Class': 'Internal Environment',
+	        'Device Instance Lower': 0,
+	        'Device Instance Upper': 0,
+	        'System Instance': 0,
+	        'Industry Group': 'Marine'
+	      },
+	      productInfo: {
+	        'NMEA 2000 Version': 2100,
+	        'Product Code': 246,
+	        'Model ID': 'H5000 CPU',
+	        'Software Version Code': '2.0.45.0.29',
+	        'Model Version': '',
+	        'Model Serial Code': '005469',
+	        'Certification Level': 2,
+	        'Load Equivalency': 1
+	      }
+      })
+
+      simpleCan.start()
+      app.setPluginStatus(`Connected to ${canDevice}`)
+      app.debug('simpleCan.candevice.address: %j', simpleCan.candevice.address)
+      deviceAddress = simpleCan.candevice.address
+    }
+
+    function sendKeepAlive () {
+      let msg = util.format(keepAlivePGN, (new Date()).toISOString(), sourceAddress)
+      simpleCan.sendPGN(msg)
+    }
 
     timers.push(setInterval(() => {
-      sendPerformance(); 
+      sendPerformance() 
     }, 500))
+    
+    timers.push(setInterval(() => {
+      sendKeepAlive();
+    }, 1000))
 
-  };
+
+
+  }
 
 
 
