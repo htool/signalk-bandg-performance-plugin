@@ -24,7 +24,7 @@ module.exports = function (app) {
       },
       emulate: {
         type: "boolean",
-        title: "Enabled B&G H5000 device emulation (only on canbus)"
+        title: "Enabled B&G H5000 device emulation to enable Laylines screen on Triton2 (only on canbus)"
       },
       candevice: {
         type: "string",
@@ -671,7 +671,7 @@ module.exports = function (app) {
         // Get value
         var path = globalOptions[type]['path']
         var source = globalOptions[type]['source']
-        app.debug('globalOptions[%s] enabled  path: %s  source: %s', type, path, source || 'n/a');
+        // app.debug('globalOptions[%s] enabled  path: %s  source: %s', type, path, source || 'n/a');
         value = app.getSelfPath(path)
         if (typeof (value) != 'undefined') {
           if (typeof (source) == 'undefined') {
@@ -692,7 +692,7 @@ module.exports = function (app) {
         app.debug('path: %s  value: %j', path, value);
         if (typeof (value) != 'undefined') {
           // We have a path with a working value
-          app.debug('path: %s  value: %j', path, value);
+          // app.debug('path: %s  value: %j', path, value);
           // Add key to msg
           performancePGN_2 += ',' + supportedValues[type]['key']
           // Add value
@@ -759,10 +759,17 @@ module.exports = function (app) {
         length = 10; // force multipacket
       }
       let msg = util.format(performancePGN + performancePGN_2, (new Date()).toISOString(), sourceAddress, padd((length & 0xff).toString(16), 2))
-      simpleCan.sendPGN(msg)
+      sendN2k(msg)
     }
   }
 
+  function sendN2k (msg) {
+    if (globalOptions.emulate == true) {
+      simpleCan.sendPGN(msg)
+    } else {
+      app.emit('nmea2000out', msg)
+    }
+  }
 
   function updateSchema() {
     Object.keys(supportedValues).forEach(key => {
@@ -812,7 +819,7 @@ module.exports = function (app) {
     globalOptions = options
     app.debug('Options: %s', JSON.stringify(globalOptions))
 
-    if (options.emulate == true) {
+    if (globalOptions.emulate == true) {
       const SimpleCan = require('@canboat/canboatjs').SimpleCan
       app.debug('Using device id: %d', options.sourceAddress)
       sourceAddress = options.sourceAddress || 14
@@ -876,7 +883,7 @@ module.exports = function (app) {
 
     function sendKeepAlive () {
       let msg = util.format(keepAlivePGN, (new Date()).toISOString(), sourceAddress)
-      simpleCan.sendPGN(msg)
+      sendN2k(msg)
     }
 
     timers.push(setInterval(() => {
