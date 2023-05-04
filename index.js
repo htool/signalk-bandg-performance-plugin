@@ -2,7 +2,7 @@ const util = require('util')
 const _ = require('lodash')
 var globalOptions = []
 const performancePGN = '%s,3,130824,%s,255,%s,7d,99'
-const keepAlivePGN = '%s,7,65305,%s,255,08,41,9f,01,17,1c,01,00,00'
+const keepAlivePGN = '%s,7,65305,%s,255,8,41,9f,01,17,1c,01,00,00'
 
 module.exports = function (app) {
   var plugin = {}
@@ -758,7 +758,7 @@ module.exports = function (app) {
         }
         length = 10; // force multipacket
       }
-      let msg = util.format(performancePGN + performancePGN_2, (new Date()).toISOString(), sourceAddress, padd((length & 0xff).toString(16), 2))
+      let msg = util.format(performancePGN + performancePGN_2, (new Date()).toISOString(), sourceAddress, length)
       sendN2k(msg)
     }
   }
@@ -889,12 +889,12 @@ module.exports = function (app) {
     timers.push(setInterval(() => {
       sendPerformance() 
     }, 500))
-    
-    timers.push(setInterval(() => {
-      sendKeepAlive();
-    }, 1000))
-
-
+   
+    if (globalOptions.emulate == true) {
+      timers.push(setInterval(() => {
+        sendKeepAlive();
+      }, 1000))
+    }
 
   }
 
