@@ -3,6 +3,7 @@ const _ = require('lodash')
 var globalOptions = []
 const performancePGN = '%s,3,130824,%s,255,%s,7d,99'
 const keepAlivePGN = '%s,7,65305,%s,255,8,41,9f,01,17,1c,01,00,00'
+const keepAlivePGN2 = '%s,7,126993,%s,255,8,60,ea,%s,ff,ff,ff,ff,ff'
 
 module.exports = function (app) {
   var plugin = {}
@@ -10,6 +11,8 @@ module.exports = function (app) {
   var timers = []
   var sourceAddress = 1
   var simpleCan
+  var SID = 0
+  var boot_stage = 'begin'
 
   plugin.id = 'signalk-bandg-performance-plugin';
   plugin.name = 'B&G performance PGN plugin';
@@ -884,13 +887,96 @@ module.exports = function (app) {
     function sendKeepAlive () {
       let msg = util.format(keepAlivePGN, (new Date()).toISOString(), sourceAddress)
       sendN2k(msg)
+      let msg2 = util.format(keepAlivePGN2, (new Date()).toISOString(), sourceAddress, SID)
+      sendN2k(msg2)
+      SID++
+      if (SID > 253) {
+        SID = 0
+      }
     }
+
+    function bootmsgs () {
+      app.debug('bootmsg stage %s', boot_stage)
+      var PGN, msg
+      switch (boot_stage) { 
+        case 'begin':
+          // 05749757 ?
+          PGN = '%s,7,130847,%s,255,12,13,99,09,31,30,35,37,34,39,37,35,37,ff'
+          msg = util.format(PGN, (new Date()).toISOString(), sourceAddress)
+          sendN2k(msg)
+          boot_stage = 'init'
+          setTimeout(bootmsgs, 100)
+          break
+
+        case 'init':
+          // State initializing?
+          app.debug('Status init?')
+          PGN = '%s,3,130845,%s,255,8,15,41,9f,ff,ff,ff,ff,03,00,00,02,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff'
+          msg = util.format(PGN, (new Date()).toISOString(), sourceAddress)
+          sendN2k(msg)
+          boot_stage = 'polar1'
+          setTimeout(bootmsgs, 100)
+          break
+
+        case 'polar1':
+          // Polar info?
+          app.debug('Sending polar info?')
+          PGN = '%s,3,130823,%s,255,223,13,99,ff,00,0f,01,00,04,00,00,2e,42,04,52,b8,96,40,04,00,00,13,43,16,00,04,00,00,20,41,04,66,66,16,40,04,d7,a3,88,40,04,85,eb,b9,40,04,33,33,db,40,04,66,66,e6,40,04,8f,c2,ed,40,04,ec,51,f0,40,04,0a,d7,fb,40,04,ec,51,00,41,04,ae,47,01,41,04,66,66,fe,40,04,48,e1,f2,40,04,ae,47,e1,40,04,00,00,d0,40,04,b8,1e,c5,40,04,e1,7a,b4,40,04,9a,99,a9,40,04,ae,47,91,40,04,9a,99,29,42,04,f6,28,b4,40,04,00,00,15,43,16,00,04,00,00,40,41,04,a4,70,1d,40,04,a4,70,9d,40,04,8f,c2,cd,40,04,14,ae,ef,40,04,ae,47,f9,40,04,29,5c,ff,40,04,d7,a3,00,41,04,3d,0a,03,41,04,48,e1,06,41,04,c3,f5,08,41,04,00,00,08,41,04,3d,0a,03,41,04,d7,a3,f8,40,04,66,66,ee,40,04,00,00,e0,40,04,ae,47,d1,40,04,3d'
+          msg = util.format(PGN, (new Date()).toISOString(), sourceAddress)
+          sendN2k(msg)
+          boot_stage = 'polar2'
+          setTimeout(bootmsgs, 100)
+          break
+
+        case 'polar2':
+          PGN = '%s,3,130823,%s,255,223,13,99,ff,00,0f,02,00,0a,c7,40,04,ec,51,a0,40,04,9a,99,27,42,04,52,b8,ce,40,04,00,00,18,43,16,00,04,00,00,60,41,04,8f,c2,35,40,04,52,b8,ae,40,04,c3,f5,d8,40,04,5c,8f,fa,40,04,8f,c2,01,41,04,d7,a3,04,41,04,85,eb,05,41,04,71,3d,06,41,04,c3,f5,08,41,04,48,e1,0e,41,04,14,ae,0f,41,04,a4,70,0d,41,04,cd,cc,04,41,04,8f,c2,01,41,04,c3,f5,f8,40,04,a4,70,ed,40,04,c3,f5,e0,40,04,ae,47,a9,40,04,cd,cc,26,42,04,e1,7a,e4,40,04,00,00,1d,43,16,00,04,00,00,80,41,04,71,3d,3a,40,04,9a,99,b1,40,04,8f,c2,dd,40,04,66,66,fe,40,04,0a,d7,03,41,04,0a,d7,07,41,04,7b,14,0a,41,04,48,e1,0a,41,04,5c,8f,0e,41,04,33,33,13,41,04,f6,28,18,41,04,85,eb,15,41,04,b8,1e,11,41,04,cd,cc,08,41,04,1f,85,07'
+          msg = util.format(PGN, (new Date()).toISOString(), sourceAddress)
+          sendN2k(msg)
+          boot_stage = 'polar3'
+          setTimeout(bootmsgs, 100)
+          break
+
+        case 'polar3':
+          PGN = '%s,3,130823,%s,255,223,13,99,ff,00,0f,03,00,41,04,b8,1e,01,41,04,14,ae,f7,40,04,f6,28,ac,40,04,9a,99,25,42,04,00,00,f8,40,04,00,00,2d,43,16,00,04,00,00,a0,41,04,7b,14,3e,40,04,48,e1,ba,40,04,48,e1,e2,40,04,29,5c,ff,40,04,d7,a3,04,41,04,8f,c2,09,41,04,3d,0a,0f,41,04,f6,28,14,41,04,3d,0a,17,41,04,66,66,1a,41,04,14,ae,23,41,04,48,e1,22,41,04,f6,28,20,41,04,ec,51,18,41,04,3d,0a,13,41,04,cd,cc,10,41,04,14,ae,0f,41,04,0a,d7,ab,40,04,33,33,27,42,04,5c,8f,0a,41,04,00,00,33,43,16,00,04,00,00,c8,41,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04'
+          msg = util.format(PGN, (new Date()).toISOString(), sourceAddress)
+          sendN2k(msg)
+          boot_stage = 'polar4'
+          setTimeout(bootmsgs, 100)
+          break
+
+        case 'polar4':
+          PGN = '%s,3,130823,%s,255,223,13,99,ff,00,0f,04,00,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,16,00,04,00,00,f0,41,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,16,00,04,00,00,0c,42,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,0a,d7,23,3c,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00'
+          msg = util.format(PGN, (new Date()).toISOString(), sourceAddress)
+          sendN2k(msg)
+          boot_stage = 'polar5'
+          setTimeout(bootmsgs, 100)
+          break
+
+        case 'polar5':
+          PGN = '%s,3,130823,%s,255,54,13,99,ff,00,0f,05,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,04,00,00,00,00,ff'
+          msg = util.format(PGN, (new Date()).toISOString(), sourceAddress)
+          sendN2k(msg)
+          boot_stage = 'ready'
+          setTimeout(bootmsgs, 100)
+          break
+
+        case 'ready':
+          // State ready?
+          PGN = '%s,3,130845,%s,255,8,15,41,9f,ff,ff,01,ff,04,05,00,01,00,00,ff,ff,ff,ff,ff,ff,ff,ff'
+          msg = util.format(PGN, (new Date()).toISOString(), sourceAddress)
+          sendN2k(msg)
+          break
+      }
+    }
+
+
 
     timers.push(setInterval(() => {
       sendPerformance() 
     }, 500))
    
     if (globalOptions.emulate == true) {
+      setTimeout(bootmsgs, 4000)
       timers.push(setInterval(() => {
         sendKeepAlive();
       }, 1000))
@@ -916,13 +1002,18 @@ module.exports = function (app) {
   return plugin;
 };
 
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 function padd(n, p, c)
 {
   var pad_char = typeof c !== 'undefined' ? c : '0';
   var pad = new Array(1 + p).join(pad_char);
   return (pad + n).slice(-pad.length);
 }
-
 
 function radToDeg(radians) {
   return radians * 180 / Math.PI
