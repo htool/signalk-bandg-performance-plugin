@@ -758,7 +758,7 @@ module.exports = function (app) {
         }
         length = 10; // force multipacket
       }
-      let msg = util.format(performancePGN + performancePGN_2, (new Date()).toISOString(), sourceAddress, length)
+      let msg = util.format(performancePGN + performancePGN_2, (new Date()).toISOString(), sourceAddress, String(length))
       sendN2k(msg)
     }
   }
