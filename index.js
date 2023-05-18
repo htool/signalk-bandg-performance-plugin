@@ -914,7 +914,7 @@ module.exports = function (app) {
           PGN = '%s,3,130845,%s,255,8,15,41,9f,ff,ff,ff,ff,03,00,00,02,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff'
           msg = util.format(PGN, (new Date()).toISOString(), sourceAddress)
           sendN2k(msg)
-          boot_stage = 'polar1'
+          boot_stage = 'ready'
           setTimeout(bootmsgs, 100)
           break
 
