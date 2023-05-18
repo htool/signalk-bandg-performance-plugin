@@ -674,13 +674,15 @@ module.exports = function (app) {
         // Get value
         var path = globalOptions[type]['path']
         var source = globalOptions[type]['source']
-        // app.debug('globalOptions[%s] enabled  path: %s  source: %s', type, path, source || 'n/a');
         value = app.getSelfPath(path)
+        // app.debug('globalOptions[%s] enabled  path: %s value: %s source: %s', type, path, value, source || 'n/a');
         if (typeof (value) != 'undefined') {
           if (typeof (source) == 'undefined') {
-            value = value['value']
+            value = value.value
           } else {
-            value = value['values'][source]['value']
+            if (value.source == source) {
+              value = value.value
+            }
           }
         }
         if (path == 'navigation.attitude') {
