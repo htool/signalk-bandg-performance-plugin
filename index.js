@@ -44,7 +44,6 @@ module.exports = function (app) {
     'avgTrueWindDirection': {
       'name'        : 'Average True Wind Direction (rad)',
       'key'         : '50,21',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -52,7 +51,6 @@ module.exports = function (app) {
     'biasAdvantage': {
       'name'        : 'Bias Advantage (m)',
       'key'         : '31,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -60,7 +58,6 @@ module.exports = function (app) {
     'chainLength': {
       'name'        : 'Chain Length (m)',
       'key'         : '1c,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -68,7 +65,6 @@ module.exports = function (app) {
     'codeZeroLoad': {
       'name'        : 'Code Zero Load',
       'key'         : '2a,21',
-      'length'      : 2,
       'unit'        : '',
       'defaultPath' : ''
     },
@@ -76,7 +72,6 @@ module.exports = function (app) {
     'course': {
       'name'        : 'Course (rad)',
       'key'         : '69,20',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'navigation.courseOverGroundTrue'
     },
@@ -84,7 +79,6 @@ module.exports = function (app) {
     'cunningham': {
       'name'        : 'Cunningham',
       'key'         : '24,21',
-      'length'      : 2,
       'unit'        : '',
       'defaultPath' : ''
     },
@@ -92,7 +86,6 @@ module.exports = function (app) {
     'drBearing': {
       'name'        : 'Dead Reckoning bearing (rad)',
       'key'         : 'd3,20',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -100,7 +93,6 @@ module.exports = function (app) {
     'drDistance': {
       'name'        : 'Dead Reckoning Distance (m)',
       'key'         : '81,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -108,7 +100,6 @@ module.exports = function (app) {
     'groundWindDirection': {
       'name'        : 'Ground Wind Direction (rad)',
       'key'         : '37,21',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'environment.wind.directionGround'
     },
@@ -116,7 +107,6 @@ module.exports = function (app) {
     'groundWind': {
       'name'        : 'Ground Wind Speed (m/s)',
       'key'         : '38,21',
-      'length'      : 2,
       'unit'        : 'm/s',
       'defaultPath' : 'environment.wind.speedOverGround'
     },
@@ -124,7 +114,6 @@ module.exports = function (app) {
     'headingOppTack': {
       'name'        : 'Heading on Opposite Tack (True) (rad)',
       'key'         : '9a,20',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'performance.tackTrue'
     },
@@ -132,7 +121,6 @@ module.exports = function (app) {
     'heelAngle': {
       'name'        : 'Heel Angle (rad)',
       'key'         : '34,20',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'navigation.attitude'
     },
@@ -140,7 +128,6 @@ module.exports = function (app) {
     'jacuzziTemperature': {
       'name'        : 'Jacuzzi Temperature (Kelvin)',
       'key'         : '25,21',
-      'length'      : 2,
       'unit'        : 'celcius',
       'defaultPath' : 'environment.jacuzzi.temperature'
     },
@@ -148,7 +135,6 @@ module.exports = function (app) {
     'leewayAngle': {
       'name'        : 'Leeway Angle (rad)',
       'key'         : '82,20',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'navigation.leewayAngle'
     },
@@ -156,7 +142,6 @@ module.exports = function (app) {
     'mastRake': {
       'name'        : 'Mast Rake (rad)',
       'key'         : '34,21',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -164,7 +149,6 @@ module.exports = function (app) {
     'nextLegBearing': {
       'name'        : 'Next Leg Bearing (rad)',
       'key'         : '35,21',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -172,7 +156,6 @@ module.exports = function (app) {
     'nextLegTargetSpeed': {
       'name'        : 'Next Leg Target Speed (m/s)',
       'key'         : '36,21',
-      'length'      : 2,
       'unit'        : 'm/s',
       'defaultPath' : ''
     },
@@ -180,7 +163,6 @@ module.exports = function (app) {
     'oppTackCOG': {
       'name'        : 'Opposite Tack COG (rad)',
       'key'         : '32,21',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -188,7 +170,6 @@ module.exports = function (app) {
     'oppTackTarget': {
       'name'        : 'Opposite Tack Target heading (rad)',
       'key'         : '33,21',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'performance.tackTrue'
     },
@@ -196,7 +177,6 @@ module.exports = function (app) {
     'oppWindAngle': {
       'name'        : 'Optimum Wind Angle (rad)',
       'key'         : '35,20',
-      'length'      : 2,
       'unit'        : 'signedRad',
       'defaultPath' : 'performance.optimumWindAngle'
     },
@@ -204,7 +184,6 @@ module.exports = function (app) {
     'outhaulLoad': {
       'name'        : 'Outhaul Load',
       'key'         : '22,21',
-      'length'      : 2,
       'unit'        : '',
       'defaultPath' : ''
     },
@@ -212,7 +191,6 @@ module.exports = function (app) {
     'plowAngle': {
       'name'        : 'Plow Angle (rad)',
       'key'         : '23,21',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -220,7 +198,6 @@ module.exports = function (app) {
     'polarSpeed': {
       'name'        : 'Polar Boat Speed (m/s)',
       'key'         : '7e,20',
-      'length'      : 2,
       'unit'        : 'm/s',
       'defaultPath' : 'performance.polarSpeed'
     },
@@ -228,7 +205,6 @@ module.exports = function (app) {
     'polarPerformance': {
       'name'        : 'Polar Performance (ratio)',
       'key'         : '7c,20',
-      'length'      : 2,
       'unit'        : 'percent',
       'defaultPath' : 'performance.polarSpeedRatio'
     },
@@ -236,7 +212,6 @@ module.exports = function (app) {
     'poolTemperature': {
       'name'        : 'Pool Temperature (Kelvin)',
       'key'         : '26,21',
-      'length'      : 2,
       'unit'        : 'celcius',
       'defaultPath' : 'environment.pool.temperature'
     },
@@ -244,7 +219,6 @@ module.exports = function (app) {
     'targetTWA': {
       'name'        : 'Target TWA (rad)',
       'key'         : '53,20',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'performance.targetAngle'
     },
@@ -252,7 +226,6 @@ module.exports = function (app) {
     'tideRate': {
       'name'        : 'Tide Rate (m/s)',
       'key'         : '83,20',
-      'length'      : 2,
       'unit'        : 'm/s',
       'defaultPath' : ''
     },
@@ -260,7 +233,6 @@ module.exports = function (app) {
     'tideSet': {
       'name'        : 'Tide Set (rad)',
       'key'         : '84,20',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -268,7 +240,6 @@ module.exports = function (app) {
     'tackingPerf': {
       'name'        : 'Tacking Performance (ratio)',
       'key'         : '32,20',
-      'length'      : 2,
       'unit'        : 'percent',
       'defaultPath' : ''
     },
@@ -276,7 +247,6 @@ module.exports = function (app) {
     'trimAngle': {
       'name'        : 'Trim Angle (rad)',
       'key'         : '9b,20',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : 'navigation.attitude'
     },
@@ -284,7 +254,6 @@ module.exports = function (app) {
     'vmg': {
       'name'        : 'Velocity Made Good (m/s)',
       'key'         : '7f,20',
-      'length'      : 2,
       'unit'        : 'm/s',
       'defaultPath' : 'performance.velocityMadeGood'
     },
@@ -292,7 +261,6 @@ module.exports = function (app) {
     'vmgperf': {
       'name'        : 'VMG Performance (ratio)',
       'key'         : '1d,21',
-      'length'      : 2,
       'unit'        : 'percent',
       'defaultPath' : 'performance.velocityMadeGoodRatio'
     },
@@ -300,7 +268,6 @@ module.exports = function (app) {
     'windAngleMast': {
       'name'        : 'Wind Angle to Mast (rad)',
       'key'         : '9d,20',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -308,7 +275,6 @@ module.exports = function (app) {
     'windPhase': {
       'name'        : 'Wind Phase (rad)',
       'key'         : '51,21',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -316,7 +282,6 @@ module.exports = function (app) {
     'windLift': {
       'name'        : 'Wind Lift (rad)',
       'key'         : '52,21',
-      'length'      : 2,
       'unit'        : 'rad',
       'defaultPath' : ''
     },
@@ -324,7 +289,6 @@ module.exports = function (app) {
     'user1': {
       'name'        : 'User 1',
       'key'         : '38,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -332,7 +296,6 @@ module.exports = function (app) {
     'user2': {
       'name'        : 'User 2',
       'key'         : '39,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -340,7 +303,6 @@ module.exports = function (app) {
     'user3': {
       'name'        : 'User 3',
       'key'         : '3a,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -348,7 +310,6 @@ module.exports = function (app) {
     'user4': {
       'name'        : 'User 4',
       'key'         : '3b,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -356,7 +317,6 @@ module.exports = function (app) {
     'user5': {
       'name'        : 'User 5',
       'key'         : '10,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -364,7 +324,6 @@ module.exports = function (app) {
     'user6': {
       'name'        : 'User 6',
       'key'         : '11,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -372,7 +331,6 @@ module.exports = function (app) {
     'user7': {
       'name'        : 'User 7',
       'key'         : '12,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -380,7 +338,6 @@ module.exports = function (app) {
     'user8': {
       'name'        : 'User 8',
       'key'         : '13,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -388,7 +345,6 @@ module.exports = function (app) {
     'user9': {
       'name'        : 'User 9',
       'key'         : '14,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -396,7 +352,6 @@ module.exports = function (app) {
     'user10': {
       'name'        : 'User 10',
       'key'         : '15,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -404,7 +359,6 @@ module.exports = function (app) {
     'user11': {
       'name'        : 'User 11',
       'key'         : '16,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -412,7 +366,6 @@ module.exports = function (app) {
     'user12': {
       'name'        : 'User 12',
       'key'         : '17,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -420,7 +373,6 @@ module.exports = function (app) {
     'user13': {
       'name'        : 'User 13',
       'key'         : '18,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -428,7 +380,6 @@ module.exports = function (app) {
     'user14': {
       'name'        : 'User 14',
       'key'         : '19,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -436,7 +387,6 @@ module.exports = function (app) {
     'user15': {
       'name'        : 'User 15',
       'key'         : '1a,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -444,7 +394,6 @@ module.exports = function (app) {
     'user16': {
       'name'        : 'User 16',
       'key'         : '1b,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -452,7 +401,6 @@ module.exports = function (app) {
     'user17': {
       'name'        : 'User 17',
       'key'         : '3d,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -460,7 +408,6 @@ module.exports = function (app) {
     'user18': {
       'name'        : 'User 18',
       'key'         : '3e,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -468,7 +415,6 @@ module.exports = function (app) {
     'user19': {
       'name'        : 'User 19',
       'key'         : '3f,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -476,7 +422,6 @@ module.exports = function (app) {
     'user20': {
       'name'        : 'User 20',
       'key'         : '40,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -484,7 +429,6 @@ module.exports = function (app) {
     'user21': {
       'name'        : 'User 21',
       'key'         : '41,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -492,7 +436,6 @@ module.exports = function (app) {
     'user22': {
       'name'        : 'User 22',
       'key'         : '42,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -500,7 +443,6 @@ module.exports = function (app) {
     'user23': {
       'name'        : 'User 23',
       'key'         : '43,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -508,7 +450,6 @@ module.exports = function (app) {
     'user24': {
       'name'        : 'User 24',
       'key'         : '44,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -516,7 +457,6 @@ module.exports = function (app) {
     'user25': {
       'name'        : 'User 25',
       'key'         : '45,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -524,7 +464,6 @@ module.exports = function (app) {
     'user26': {
       'name'        : 'User 26',
       'key'         : '46,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -532,7 +471,6 @@ module.exports = function (app) {
     'user27': {
       'name'        : 'User 27',
       'key'         : '47,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -540,7 +478,6 @@ module.exports = function (app) {
     'user28': {
       'name'        : 'User 28',
       'key'         : '48,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -548,7 +485,6 @@ module.exports = function (app) {
     'user29': {
       'name'        : 'User 29',
       'key'         : '49,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -556,7 +492,6 @@ module.exports = function (app) {
     'user30': {
       'name'        : 'User 30',
       'key'         : '4a,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -564,7 +499,6 @@ module.exports = function (app) {
     'user31': {
       'name'        : 'User 31',
       'key'         : '4b,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -572,7 +506,6 @@ module.exports = function (app) {
     'user32': {
       'name'        : 'User 32',
       'key'         : '4c,21',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -580,7 +513,6 @@ module.exports = function (app) {
     'remote0': {
       'name'        : 'Remote 0',
       'key'         : 'df,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -588,7 +520,6 @@ module.exports = function (app) {
     'remote1': {
       'name'        : 'Remote 1',
       'key'         : 'ef,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -596,7 +527,6 @@ module.exports = function (app) {
     'remote2': {
       'name'        : 'Remote 2',
       'key'         : 'f0,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -604,7 +534,6 @@ module.exports = function (app) {
     'remote3': {
       'name'        : 'Remote 3',
       'key'         : 'f1,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -612,7 +541,6 @@ module.exports = function (app) {
     'remote4': {
       'name'        : 'Remote 4',
       'key'         : 'f2,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -620,7 +548,6 @@ module.exports = function (app) {
     'remote5': {
       'name'        : 'Remote 5',
       'key'         : 'f3,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -628,15 +555,6 @@ module.exports = function (app) {
     'remote6': {
       'name'        : 'Remote 6',
       'key'         : 'f4,20',
-      'length'      : 2,
-      'unit'        : 'm',
-      'defaultPath' : ''
-    },
-
-    'remote7': {
-      'name'        : 'Remote 7',
-      'key'         : 'f5,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -644,7 +562,6 @@ module.exports = function (app) {
     'remote8': {
       'name'        : 'Remote 8',
       'key'         : 'f6,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     },
@@ -652,7 +569,6 @@ module.exports = function (app) {
     'remote9': {
       'name'        : 'Remote 9',
       'key'         : 'f7,20',
-      'length'      : 2,
       'unit'        : 'm',
       'defaultPath' : ''
     }
@@ -662,7 +578,7 @@ module.exports = function (app) {
 
   function sendPerformance() {
     var performancePGN_2 = ""
-    var length = 2
+    var length = 0
     var value
 
     for (var type in supportedValues) {
@@ -675,9 +591,12 @@ module.exports = function (app) {
         value = app.getSelfPath(path)
         if (typeof (value) != 'undefined') {
           if (typeof (source) == 'undefined') {
-            value = value['value']
+            value = value.value
           } else {
-            value = value['values'][source]['value']
+            if (source == value['$source']) {
+              app.debug('Matched source: %s', value['$source'])
+              value = value.value
+            }
           }
         }
         if (path == 'navigation.attitude') {
@@ -699,13 +618,13 @@ module.exports = function (app) {
           switch (supportedValues[type]['unit']) {
             case 'rad':
               var hex = radToHex(value)
-              app.debug('radToDeg: %s radToHex: %s %s', radToDeg(value), value, hex)
+              // app.debug('radToDeg: %s radToHex: %s %s', radToDeg(value), value, hex)
               performancePGN_2 += ',' + hex
               break
 
             case 'signedRad':
               var hex = signedRadToHex(value)
-              app.debug('radToDeg: %s radToHex: %s %s', signedRadToDeg(value), value, hex)
+              // app.debug('radToDeg: %s radToHex: %s %s', signedRadToDeg(value), value, hex)
               performancePGN_2 += ',' + hex
               break
 
@@ -717,7 +636,7 @@ module.exports = function (app) {
               
             case 'm':
               var hex = intToHex(value * 100) // m to cm
-              app.debug('m intToHex: %s %s', value, hex)
+              // app.debug('m intToHex: %s %s', value, hex)
               performancePGN_2 += ',' + hex
               break
 
@@ -740,23 +659,21 @@ module.exports = function (app) {
               break
 
           }
-          length += supportedValues[type]['length']
         }
         
 
-      } else {
-        //app.debug('globalOptions[%s] disabled', type);
       }
-      //app.debug('performancePGN_2: %s length: %s', performancePGN_2, length);
     }
 
     // app.debug ('%j', globalOptions)
+    length = performancePGN_2.split(',').length + 1 // array length
+    // app.debug('Msg: performancePGN_2: %s  length: %d', performancePGN_2, length)
     if (length >= 4) {
       if (length <= 8) {
         for (let x = length; x<10; x++) {
           performancePGN_2 += ',ff'
+          // app.debug('Msg: paddding performancePGN_2: %s  length: %d', performancePGN_2, length)
         }
-        length = 10; // force multipacket
       }
       let msg = util.format(performancePGN + performancePGN_2, (new Date()).toISOString(), sourceAddress, String(length))
       sendN2k(msg)
@@ -764,6 +681,7 @@ module.exports = function (app) {
   }
 
   function sendN2k (msg) {
+    // app.debug('Msg: %s', msg)
     if (globalOptions.emulate == true) {
       simpleCan.sendPGN(msg)
     } else {
