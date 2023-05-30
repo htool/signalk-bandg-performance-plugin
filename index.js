@@ -219,7 +219,7 @@ module.exports = function (app) {
     'targetTWA': {
       'name'        : 'Target TWA (rad)',
       'key'         : '53,20',
-      'unit'        : 'rad',
+      'unit'        : 'signedRad',
       'defaultPath' : 'performance.targetAngle'
     },
 
@@ -733,7 +733,6 @@ module.exports = function (app) {
   plugin.start = function (options, restartPlugin) {
     // Here we put our plugin logic
     app.debug('Plugin started')
-    var unsubscribes = []
     globalOptions = options
     app.debug('Options: %s', JSON.stringify(globalOptions))
 
@@ -820,19 +819,16 @@ module.exports = function (app) {
 
   plugin.stop = function () {
     // Here we put logic we need when the plugin stops
-    app.debug('Plugin stopped');
-    plugin.stop = function () {
-      unsubscribes.forEach(f => f());
-      unsubscribes = [];
-      timers.forEach(timer => {
-        clearInterval(timer)
-      }) 
-    };
+    app.debug('Plugin stopped')
+    unsubscribes.forEach(f => f())
+    unsubscribes = []
+    timers.forEach(timer => {
+      clearInterval(timer)
+    }) 
+  }
 
-  };
-
-  return plugin;
-};
+  return plugin
+}
 
 function padd(n, p, c)
 {
