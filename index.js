@@ -1,8 +1,61 @@
 const util = require('util')
 const _ = require('lodash')
+const net = require('net')
+const { pgnToYdwgRawFormat } = require('@canboat/canboatjs')
 var globalOptions = []
 const performancePGN = '%s,3,130824,%s,255,%s,7d,99'
 const keepAlivePGN = '%s,7,65305,%s,255,8,41,9f,01,17,1c,01,00,00'
+
+/**
+ * ---- YDWG Raw TCP transport -----------------------------------------
+ */
+class YdgwRawTransport {
+  constructor (log, host, port) {
+    this.log = log
+    this.host = host
+    this.port = port
+    this.socket = null
+  }
+  start () {
+    return new Promise((resolve) => {
+      this.socket = net.createConnection({ host: this.host, port: this.port }, () => {
+        this.log.info(`YDWG Raw TCP connected ${this.host}:${this.port}`)
+        resolve()
+      })
+      this.socket.on('error', (e) => {
+        this.log.error(`YDWG Raw TCP error: ${e.message}`)
+      })
+    })
+  }
+  stop () {
+    try { this.socket && this.socket.end() } catch (e) {}
+  }
+  sendPgnJson (pgnJson) {
+    const frames = pgnToYdwgRawFormat(pgnJson) || []
+    if (!frames.length) {
+      this.log.warn('No YDWG frames generated for PGN')
+      return
+    }
+    frames.forEach(buf => this.socket.write(buf))
+  }
+}
+
+/**
+ * Convert a canboat-ASCII line to canboat-JSON object
+ * "ISO8601,prio,pgn,src,dst,len,byte,byte,..."
+ */
+function canboatAsciiToJson (msg) {
+  const parts = msg.split(',').map(s => s.trim())
+  const prio = parseInt(parts[1], 10)
+  const pgn  = parseInt(parts[2], 10)
+  const src  = parseInt(parts[3], 10)
+  const dst  = parseInt(parts[4], 10)
+  const len  = parseInt(parts[5], 10)
+  const bytesHex = parts.slice(6)
+  const data = Buffer.from(bytesHex.map(h => parseInt(h, 16)))
+  const trimmed = (Number.isFinite(len) && len <= data.length) ? data.subarray(0, len) : data
+  return { prio, pgn, src, dst, data: trimmed }
+}
 
 module.exports = function (app) {
   var plugin = {}
@@ -10,21 +63,30 @@ module.exports = function (app) {
   var timers = []
   var sourceAddress = 1
   var simpleCan
+  var ydgwTx = null
 
   plugin.id = 'signalk-bandg-performance-plugin';
   plugin.name = 'B&G performance PGN plugin';
   plugin.description = 'Send B&G performance PGNs to display on Vulcan/Zeus/Triton2';
 
   var schema = {
-    // The plugin schema
     properties: {
       'null': {
         'title': 'Select which data to send and what to use as path and source device. Source device can be specified when a path has multiple value sources. For explanations of the data you can check the B&G H5000 Operation manual here:\nhttps://softwaredownloads.navico.com/BG/downloads/documents/H5000_OM_EN_988-10630-002_w.pdf',
         'type': 'null',
       },
+
+      // ---- NEW: make connectionType explicit; treat 'canboat' like 'canbus'
+      connectionType: {
+        type: "string",
+        title: "Connection Type (for emulation gating)",
+        enum: ["canbus", "canboat", "nmea0183"],
+        default: "canboat"
+      },
+
       emulate: {
         type: "boolean",
-        title: "Enabled B&G H5000 device emulation to enable Laylines screen on Triton2 (only on canbus)"
+        title: "Enable B&G H5000 device emulation (works with canbus or canboat)"
       },
       candevice: {
         type: "string",
@@ -35,7 +97,24 @@ module.exports = function (app) {
         title: "Source device id for B&G H5000 device emulation to use.",
         default: 14
       },
-      
+
+      // ---- NEW: transport settings for output
+      transport: {
+        type: "string",
+        title: "Transport type",
+        enum: ["socketcan", "ydwg-raw"],
+        default: "socketcan"
+      },
+      host: {
+        type: "string",
+        title: "Transport host (Yacht Devices IP for ydwg-raw)",
+        default: "127.0.0.1"
+      },
+      port: {
+        type: "number",
+        title: "Transport port (YDWG Raw TCP)",
+        default: 1457
+      },
     }
   }
 
@@ -582,12 +661,10 @@ module.exports = function (app) {
     var value
 
     for (var type in supportedValues) {
-      //app.debug('type: %s', type)
       if (typeof (globalOptions[type]) != 'undefined' && globalOptions[type]['enabled'] == true) {
         // Get value
         var path = globalOptions[type]['path']
         var source = globalOptions[type]['source']
-        // app.debug('globalOptions[%s] enabled  path: %s  source: %s', type, path, source || 'n/a');
         value = app.getSelfPath(path)
         if (typeof (value) != 'undefined') {
           if (typeof (source) == 'undefined') {
@@ -610,69 +687,48 @@ module.exports = function (app) {
         }
         app.debug('path: %s  value: %j', path, value);
         if (typeof (value) != 'undefined') {
-          // We have a path with a working value
-          // app.debug('path: %s  value: %j', path, value);
-          // Add key to msg
           performancePGN_2 += ',' + supportedValues[type]['key']
-          // Add value
           switch (supportedValues[type]['unit']) {
             case 'rad':
               var hex = radToHex(value)
-              // app.debug('radToDeg: %s radToHex: %s %s', radToDeg(value), value, hex)
               performancePGN_2 += ',' + hex
               break
-
             case 'signedRad':
               var hex = signedRadToHex(value)
-              // app.debug('radToDeg: %s radToHex: %s %s', signedRadToDeg(value), value, hex)
               performancePGN_2 += ',' + hex
               break
-
             case 'percent':
               var hex = intToHex(value * 1000) // ratio to percentiles
-              //app.debug('% intToHex: %s %s', value, hex)
               performancePGN_2 += ',' + hex
               break
-              
             case 'm':
               var hex = intToHex(value * 100) // m to cm
-              // app.debug('m intToHex: %s %s', value, hex)
               performancePGN_2 += ',' + hex
               break
-
             case 'celcius':
               var hex = intToHex(value * 100) // Celcius in Kelvin
               app.debug('celcius intToHex: %s %s', value, hex)
               performancePGN_2 += ',' + hex
               break
-
             case '':
               var hex = intToHex(value * 1000) 
               app.debug('intToHex: %s %s', value, hex)
               performancePGN_2 += ',' + hex
               break
-
             case 'm/s':
               var hex = intToHex(value * 100) // m/s to cm/s
-              //app.debug('intToHex: %s %s', value, hex)
               performancePGN_2 += ',' + hex
               break
-
           }
         }
-        
-
       }
     }
 
-    // app.debug ('%j', globalOptions)
     length = performancePGN_2.split(',').length + 1 // array length
-    // app.debug('Msg: performancePGN_2: %s  length: %d', performancePGN_2, length)
     if (length >= 4) {
       if (length <= 8) {
         for (let x = length; x<10; x++) {
           performancePGN_2 += ',ff'
-          // app.debug('Msg: paddding performancePGN_2: %s  length: %d', performancePGN_2, length)
         }
       }
       let msg = util.format(performancePGN + performancePGN_2, (new Date()).toISOString(), sourceAddress, String(length))
@@ -681,9 +737,15 @@ module.exports = function (app) {
   }
 
   function sendN2k (msg) {
-    // app.debug('Msg: %s', msg)
     if (globalOptions.emulate == true) {
-      simpleCan.sendPGN(msg)
+      // If using YDWG Raw transport, convert and send as raw frames
+      if (globalOptions.transport && globalOptions.transport.toLowerCase() === 'ydwg-raw' && ydgwTx) {
+        const pgnJson = canboatAsciiToJson(msg)
+        ydgwTx.sendPgnJson(pgnJson)
+      } else {
+        // socketcan via SimpleCan (original behavior)
+        simpleCan && simpleCan.sendPGN(msg)
+      }
     } else {
       app.emit('nmea2000out', msg)
     }
@@ -731,71 +793,91 @@ module.exports = function (app) {
 
 
   plugin.start = function (options, restartPlugin) {
-    // Here we put our plugin logic
     app.debug('Plugin started')
     globalOptions = options
     app.debug('Options: %s', JSON.stringify(globalOptions))
 
+    // ---- NEW: Option A gating
+    const connectionType = (options.connectionType || 'canboat').toLowerCase()
+    const connectionIsN2k = connectionType === 'canbus' || connectionType === 'canboat'
+    if (options.emulate && !connectionIsN2k) {
+      app.debug(`H5000 emulation requested but connectionType='${connectionType}' is not N2K-capable (continuing but this may not work)`)
+    }
+
+    // Normalize transport
+    const transport = (options.transport || 'socketcan').toLowerCase()
+    const host = options.host || '127.0.0.1'
+    const port = Number(options.port || 1457)
+
     if (globalOptions.emulate == true) {
-      const SimpleCan = require('@canboat/canboatjs').SimpleCan
-      app.debug('Using device id: %d', options.sourceAddress)
-      sourceAddress = options.sourceAddress || 14
+      if (transport === 'ydwg-raw') {
+        app.debug('Using YDWG Raw TCP transport to %s:%d', host, port)
+        sourceAddress = options.sourceAddress || 14
+        ydgwTx = new YdgwRawTransport(app, host, port)
+        ydgwTx.start().then(() => {
+          app.setPluginStatus(`YDWG Raw connected ${host}:${port}`)
+        })
+      } else {
+        // Default (socketcan) path as before
+        const SimpleCan = require('@canboat/canboatjs').SimpleCan
+        app.debug('Using device id: %d', options.sourceAddress)
+        sourceAddress = options.sourceAddress || 14
 
-      var deviceAddress
-      var canDevice
+        var deviceAddress
+        var canDevice
 
-	    if (typeof options.candevice != 'undefined' && options.candevice != "") {
-	      canDevice = options.candevice
-	      app.debug('Using configured canDevice: %s', canDevice)
-	    } else {
-	      // app.debug('%j', app.config.settings.pipedProviders)
-	      app.debug('Trying to detect canDevice')
-	      app.config.settings.pipedProviders.forEach(provider => {
-	        if (provider.enabled == true) {
-	          provider.pipeElements.forEach(element => {
-	            if (element.type == 'providers/canbus' && typeof deviceAddress == 'undefined') {
-	              app.debug('Found provider/canbus')
-	              if (typeof element.options.canDevice != 'undefined') {
-		              app.debug('element.options.canDevice: %s', element.options.canDevice)
-	                canDevice = element.options.canDevice
-	              }
-	            }
-	          })
-	        }
-	      })
+        if (typeof options.candevice != 'undefined' && options.candevice != "") {
+          canDevice = options.candevice
+          app.debug('Using configured canDevice: %s', canDevice)
+        } else {
+          app.debug('Trying to detect canDevice')
+          app.config.settings.pipedProviders.forEach(provider => {
+            if (provider.enabled == true) {
+              provider.pipeElements.forEach(element => {
+                if (element.type == 'providers/canbus' && typeof deviceAddress == 'undefined') {
+                  app.debug('Found provider/canbus')
+                  if (typeof element.options.canDevice != 'undefined') {
+                    app.debug('element.options.canDevice: %s', element.options.canDevice)
+                    canDevice = element.options.canDevice
+                  }
+                }
+              })
+            }
+          })
+        }
+
+        simpleCan = new SimpleCan({
+          app,
+          canDevice: canDevice,
+          preferredAddress: sourceAddress,
+          transmitPGNs: [ 126996 ],
+          addressClaim: {
+            'Unique Number': 1731561,
+            'Manufacturer Code': 'Navico',
+            'Device Function': 190,
+            'Device Class': 'Internal Environment',
+            'Device Instance Lower': 0,
+            'Device Instance Upper': 0,
+            'System Instance': 0,
+            'Industry Group': 'Marine'
+          },
+          productInfo: {
+            'NMEA 2000 Version': 2100,
+            'Product Code': 246,
+            'Model ID': 'H5000 CPU',
+            'Software Version Code': '2.0.45.0.29',
+            'Model Version': '',
+            'Model Serial Code': '005469',
+            'Certification Level': 2,
+            'Load Equivalency': 1
+          }
+        })
+
+        simpleCan.start()
+        app.setPluginStatus(`Connected to ${canDevice}`)
+        app.debug('simpleCan.candevice.address: %j', simpleCan.candevice.address)
+        deviceAddress = simpleCan.candevice.address
       }
-
-	    simpleCan = new SimpleCan({
-	      app,
-	      canDevice: canDevice,
-	      preferredAddress: sourceAddress,
-	      transmitPGNs: [ 126996 ],
-	      addressClaim: {
-	        'Unique Number': 1731561,
-	        'Manufacturer Code': 'Navico',
-	        'Device Function': 190,
-	        'Device Class': 'Internal Environment',
-	        'Device Instance Lower': 0,
-	        'Device Instance Upper': 0,
-	        'System Instance': 0,
-	        'Industry Group': 'Marine'
-	      },
-	      productInfo: {
-	        'NMEA 2000 Version': 2100,
-	        'Product Code': 246,
-	        'Model ID': 'H5000 CPU',
-	        'Software Version Code': '2.0.45.0.29',
-	        'Model Version': '',
-	        'Model Serial Code': '005469',
-	        'Certification Level': 2,
-	        'Load Equivalency': 1
-	      }
-      })
-
-      simpleCan.start()
-      app.setPluginStatus(`Connected to ${canDevice}`)
-      app.debug('simpleCan.candevice.address: %j', simpleCan.candevice.address)
-      deviceAddress = simpleCan.candevice.address
     }
 
     function sendKeepAlive () {
@@ -818,13 +900,13 @@ module.exports = function (app) {
 
 
   plugin.stop = function () {
-    // Here we put logic we need when the plugin stops
     app.debug('Plugin stopped')
     unsubscribes.forEach(f => f())
     unsubscribes = []
     timers.forEach(timer => {
       clearInterval(timer)
-    }) 
+    })
+    try { ydgwTx && ydgwTx.stop() } catch (e) {}
   }
 
   return plugin
@@ -870,11 +952,11 @@ function degToRad(degrees) {
 }
 
 function intToHex(integer) {
-	var hex = padd((integer & 0xff).toString(16), 2) + "," + padd(((integer >> 8) & 0xff).toString(16), 2)
+  var hex = padd((integer & 0xff).toString(16), 2) + "," + padd(((integer >> 8) & 0xff).toString(16), 2)
   return hex
 }
 
 function intTo4BHex(integer) {
-	var hex = padd((integer & 0xff).toString(16), 2) + "," + padd(((integer >> 8) & 0xff).toString(16), 2) + "," + padd(((integer >> 16)& 0xff).toString(16), 2) + "," + padd(((integer >> 24) & 0xff).toString(16), 2)
+  var hex = padd((integer & 0xff).toString(16), 2) + "," + padd(((integer >> 8) & 0xff).toString(16), 2) + "," + padd(((integer >> 16)& 0xff).toString(16), 2) + "," + padd(((integer >> 24) & 0xff).toString(16), 2)
   return hex;
 }
