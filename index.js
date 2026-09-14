@@ -1,5 +1,7 @@
 const util = require('util')
 const _ = require('lodash')
+var n2kCamelCompat = require('./lib/n2k-camel-compat')
+var H5000_UNIQUE_NUMBER = 1731561
 var globalOptions = []
 const performancePGN = '%s,3,130824,%s,255,%s,7d,99'
 const keepAlivePGN = '%s,7,65305,%s,255,8,41,9f,01,17,1c,01,00,00'
@@ -10,6 +12,8 @@ module.exports = function (app) {
   var timers = []
   var sourceAddress = 1
   var simpleCan
+  var duplicatePGNs = [130306, 128259, 129284,     127250,  129283]
+      //               Wind  , STW   , navigation, heading, XTE
 
   plugin.id = 'signalk-bandg-performance-plugin';
   plugin.name = 'B&G performance PGN plugin';
@@ -741,6 +745,10 @@ module.exports = function (app) {
       app.debug('Using device id: %d', options.sourceAddress)
       sourceAddress = options.sourceAddress || 14
 
+      const canboatjs = require('@canboat/canboatjs')
+      const Parser = require('@canboat/canboatjs').FromPgn
+      var parser = new canboatjs.FromPgn()
+
       var deviceAddress
       var canDevice
 
@@ -771,7 +779,7 @@ module.exports = function (app) {
 	      preferredAddress: sourceAddress,
 	      transmitPGNs: [ 126996 ],
 	      addressClaim: {
-	        'Unique Number': 1731561,
+	        'Unique Number': H5000_UNIQUE_NUMBER,
 	        'Manufacturer Code': 'Navico',
 	        'Device Function': 190,
 	        'Device Class': 'Internal Environment',
@@ -792,6 +800,22 @@ module.exports = function (app) {
 	      }
       })
 
+      if (globalOptions.emulate == true) {
+	      simpleCan.messageCb = (msg) => {
+	        if (duplicatePGNs.includes(msg.pgn.pgn) == true && msg.pgn.src != simpleCan.candevice.address) {
+	          // app.debug(msg)
+	          // Resend from this plugin id
+	          let PGN = "%s,%s,%s,%s,255,%s," + hex(msg.data)
+	          let newMsg = util.format(PGN, (new Date()).toISOString(), msg.pgn.prio, msg.pgn.pgn, simpleCan.candevice.address, msg.length)
+	          // app.debug(newMsg)
+	          simpleCan.sendPGN(newMsg)
+	        }
+	      }
+      }
+
+      app.prependListener('N2KAnalyzerOut', function (n2k) {
+        n2kCamelCompat(n2k, H5000_UNIQUE_NUMBER)
+      })
       simpleCan.start()
       app.setPluginStatus(`Connected to ${canDevice}`)
       app.debug('simpleCan.candevice.address: %j', simpleCan.candevice.address)
@@ -877,4 +901,22 @@ function intToHex(integer) {
 function intTo4BHex(integer) {
 	var hex = padd((integer & 0xff).toString(16), 2) + "," + padd(((integer >> 8) & 0xff).toString(16), 2) + "," + padd(((integer >> 16)& 0xff).toString(16), 2) + "," + padd(((integer >> 24) & 0xff).toString(16), 2)
   return hex;
+}
+
+const byteToHex = []
+for (let n = 0; n <= 0xff; ++n)
+{
+  const hexOctet = n.toString(16).padStart(2, "0");
+  byteToHex.push(hexOctet);
+}
+
+function hex(arrayBuffer)
+{
+  const buff = new Uint8Array(arrayBuffer);
+  const hexOctets = []; // new Array(buff.length) is even faster (preallocates necessary array size), then use hexOctets[i] instead of .push()
+
+  for (let i = 0; i < buff.length; ++i)
+    hexOctets.push(byteToHex[buff[i]]);
+
+  return hexOctets.join(",");
 }
