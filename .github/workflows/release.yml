@@ -80,6 +80,9 @@ jobs:
         run: echo "Manual workflow validation only; npm publish skipped."
       - name: Publish to npm
         if: ${{ github.ref == 'refs/heads/main' && steps.pkg.outputs.already_published == 'false' && (github.event_name == 'push' || inputs.publish == true) }}
+        env:
+          # setup-node injects a placeholder; OIDC trusted publishing needs it unset
+          NODE_AUTH_TOKEN: ''
         run: |
           VERSION="${{ steps.pkg.outputs.version }}"
           if [[ "$VERSION" == *beta* ]]; then
