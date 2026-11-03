@@ -26,5 +26,12 @@
   "dependencies": {
     "@canboat/canboatjs": "^1.27.0",
     "lodash": "^4.17.21"
+  },
+  "signalk": {
+    "displayName": "B&G Performance",
+    "recommends": [
+      "signalk-polar-performance-plugin",
+      "signalk-bandg-user-remote-rename"
+    ]
   }
 }
